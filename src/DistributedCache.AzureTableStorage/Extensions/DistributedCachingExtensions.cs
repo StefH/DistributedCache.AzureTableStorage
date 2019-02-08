@@ -1,9 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Stef.Extensions.Caching.AzureTableStorage.Extensions
+namespace DistributedCache.AzureTableStorage.Extensions
 {
     /// <summary>
     /// https://dejanstojanovic.net/aspnet/2018/may/using-idistributedcache-in-net-core-just-got-a-lot-easier/

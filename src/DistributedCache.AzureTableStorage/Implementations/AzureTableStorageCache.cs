@@ -1,17 +1,17 @@
-﻿using JetBrains.Annotations;
+﻿using DistributedCache.AzureTableStorage.Models;
+using DistributedCache.AzureTableStorage.Options;
+using DistributedCache.AzureTableStorage.Validation;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
-using Stef.Extensions.Caching.AzureTableStorage.Models;
-using Stef.Extensions.Caching.AzureTableStorage.Options;
-using Stef.Extensions.Caching.AzureTableStorage.Validation;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using WindowsAzure.Table;
 using WindowsAzure.Table.Extensions;
 
-namespace Stef.Extensions.Caching.AzureTableStorage.Implementations
+namespace DistributedCache.AzureTableStorage.Implementations
 {
     /// <summary>
     /// An <see cref="IDistributedCache"/> implementation to cache data in Azure table storage.

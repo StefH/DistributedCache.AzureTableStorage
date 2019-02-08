@@ -1,7 +1,7 @@
 ﻿using System;
 using WindowsAzure.Table.Attributes;
 
-namespace Stef.Extensions.Caching.AzureTableStorage.Models
+namespace DistributedCache.AzureTableStorage.Models
 {
     /// <summary>
     /// Represents an item to be stored in the table.

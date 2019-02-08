@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using System.IO;
 
-namespace Stef.Extensions.Caching.AzureTableStorage.Extensions
+namespace DistributedCache.AzureTableStorage.Extensions
 {
     internal static class BinarySerializerExtensions
     {

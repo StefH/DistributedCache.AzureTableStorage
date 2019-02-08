@@ -1,8 +1,7 @@
 ﻿// copied from https://github.com/aspnet/EntityFramework/blob/dev/src/Microsoft.EntityFrameworkCore/Properties/CoreStrings.resx
-
 using System.Diagnostics.CodeAnalysis;
 
-namespace Stef.Extensions.Caching.AzureTableStorage.Validation
+namespace DistributedCache.AzureTableStorage.Validation
 {
     [ExcludeFromCodeCoverage]
     internal static class CoreStrings

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Stef.Extensions.Caching.AzureTableStorage.Options
+namespace DistributedCache.AzureTableStorage.Options
 {
     /// <summary>
     /// Configuration settings for the Azure table storage cache.
@@ -26,12 +24,5 @@ namespace Stef.Extensions.Caching.AzureTableStorage.Options
         /// </summary>
         [Required]
         public string PartitionKey { get; set; }
-
-        //[Required]
-        //public string Separator { get; set; } = ":";
-
-        // public IDictionary<Type, string> Prefixes { get; set; } = new Dictionary<Type, string>();
-
-        //public Dictionary<(Type, Type), DistributedCacheEntryOptions> Options { get; }
     }
 }

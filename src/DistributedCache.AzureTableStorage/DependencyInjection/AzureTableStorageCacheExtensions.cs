@@ -1,7 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using DistributedCache.AzureTableStorage.Implementations;
+using DistributedCache.AzureTableStorage.Validation;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
-using Stef.Extensions.Caching.AzureTableStorage.Implementations;
-using Stef.Extensions.Caching.AzureTableStorage.Validation;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
