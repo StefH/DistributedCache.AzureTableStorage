@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
-    <Title>Microsoft.Extensions.Caching.AzureTableStorage</Title>
+    <Title>DistributedCache.AzureTableStorage</Title>
     <Authors>Stuart Whiteford;Stef Heyenrath</Authors>
     <Copyright>Stuart Whiteford</Copyright>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
