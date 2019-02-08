@@ -1,0 +1,2 @@
+# DistributedCache.AzureTableStorage
+IDistributedCache implementation for AzureTableStorage
