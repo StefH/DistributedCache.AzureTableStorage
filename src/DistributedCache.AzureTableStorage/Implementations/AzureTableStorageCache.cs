@@ -21,7 +21,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
     {
         private readonly AzureTableStorageCacheOptions _options;
 
-        private readonly ITableSet<CachedItem> _table;
+        private readonly ITableSet<CachedItem> _tableSet;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureTableStorageCache"/> class.
@@ -34,10 +34,10 @@ namespace DistributedCache.AzureTableStorage.Implementations
             _options = options.Value;
 
             // Create CloudTableClient
-            var client = CloudStorageAccount.Parse(options.Value.ConnectionString).CreateCloudTableClient();
+            var client = CloudStorageAccount.Parse(_options.ConnectionString).CreateCloudTableClient();
 
-            // Create table sets
-            _table = new TableSet<CachedItem>(client, options.Value.TableName);
+            // Create TableSet
+            _tableSet = new TableSet<CachedItem>(client, _options.TableName);
         }
 
         /// <inheritdoc cref="IDistributedCache.Get(string)"/>
@@ -72,18 +72,18 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            CachedItem item = await RetrieveAsync(key);
+            var item = await RetrieveAsync(key);
             if (item != null)
             {
                 if (ShouldDelete(item))
                 {
-                    await RemoveAsync(item, token);
+                    await _tableSet.RemoveAsync(item, token);
                     return;
                 }
 
                 item.LastAccessTime = DateTimeOffset.UtcNow;
 
-                await _table.UpdateAsync(item, token);
+                await _tableSet.UpdateAsync(item, token);
             }
         }
 
@@ -101,7 +101,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             Guard.NotNullOrEmpty(key, nameof(key));
 
             CachedItem item = RetrieveAsync(key).Result;
-            return item != null ? _table.RemoveAsync(item, token) : Task.CompletedTask;
+            return item != null ? _tableSet.RemoveAsync(item, token) : Task.CompletedTask;
         }
 
         /// <inheritdoc cref="IDistributedCache.Set(string, byte[], DistributedCacheEntryOptions)"/>
@@ -109,6 +109,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
             Guard.NotNullOrEmpty(value, nameof(value));
+            Guard.NotNull(options, nameof(options));
 
             SetAsync(key, value, options).Wait();
         }
@@ -118,6 +119,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
             Guard.NotNullOrEmpty(value, nameof(value));
+            Guard.NotNull(options, nameof(options));
 
             DateTimeOffset? absoluteExpiration = null;
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
@@ -157,19 +159,12 @@ namespace DistributedCache.AzureTableStorage.Implementations
                 item.SlidingExpiration = options.SlidingExpiration;
             }
 
-            await _table.AddOrUpdateAsync(item, token);
-        }
-
-        private Task RemoveAsync([NotNull] CachedItem item, CancellationToken token = default(CancellationToken))
-        {
-            Guard.NotNull(item, nameof(item));
-
-            return _table.RemoveAsync(item, token);
+            await _tableSet.AddOrUpdateAsync(item, token);
         }
 
         private Task<CachedItem> RetrieveAsync(string key)
         {
-            return _table.FirstOrDefaultAsync(e => e.PartitionKey == _options.PartitionKey && e.RowKey == key);
+            return _tableSet.FirstOrDefaultAsync(e => e.PartitionKey == _options.PartitionKey && e.RowKey == key);
         }
 
         /// <summary>
@@ -181,7 +176,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// </returns>
         private bool ShouldDelete(CachedItem item)
         {
-            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+            var currentTime = DateTimeOffset.UtcNow;
             if (item.AbsoluteExpiration != null && item.AbsoluteExpiration.Value <= currentTime)
             {
                 return true;
