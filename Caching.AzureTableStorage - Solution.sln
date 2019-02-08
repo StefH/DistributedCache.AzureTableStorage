@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF60A9C5-549D-46BC-B782-7B7AD1C207D0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		CHANGELOG.md = CHANGELOG.md
+		Directory.Build.props = Directory.Build.props
+		GitHubReleaseNotes.txt = GitHubReleaseNotes.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{52B766D7-EA4B-4EFB-B0AB-486A10C020F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppExample", "src\ConsoleAppExample\ConsoleAppExample.csproj", "{5AA366D1-574C-42FE-B0A5-6D266065B2B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage", "src\DistributedCache.AzureTableStorage\DistributedCache.AzureTableStorage.csproj", "{EE65A912-FC2F-4FF8-8717-7332267EE8E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AA366D1-574C-42FE-B0A5-6D266065B2B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA366D1-574C-42FE-B0A5-6D266065B2B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA366D1-574C-42FE-B0A5-6D266065B2B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA366D1-574C-42FE-B0A5-6D266065B2B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE65A912-FC2F-4FF8-8717-7332267EE8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE65A912-FC2F-4FF8-8717-7332267EE8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE65A912-FC2F-4FF8-8717-7332267EE8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE65A912-FC2F-4FF8-8717-7332267EE8E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5AA366D1-574C-42FE-B0A5-6D266065B2B2} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
+		{EE65A912-FC2F-4FF8-8717-7332267EE8E8} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A6ED5AF-7B32-444B-887A-ABF343EE609C}
+	EndGlobalSection
+EndGlobal

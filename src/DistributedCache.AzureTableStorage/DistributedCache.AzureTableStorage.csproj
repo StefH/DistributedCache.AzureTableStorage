@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
+    <Title>Microsoft.Extensions.Caching.AzureTableStorage</Title>
+    <Authors>Stuart Whiteford;Stef Heyenrath</Authors>
+    <Copyright>Stuart Whiteford</Copyright>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <PackageId>AspNetCore.Security.Auth0</PackageId>
+    <PackageTags>cache azure table storage</PackageTags>
+    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
+    <!--<PackageIconUrl>https://raw.githubusercontent.com/stefh/AspNetCore.Security.Auth0/master/resources/auth0-logo.png</PackageIconUrl>-->
+    <PackageProjectUrl>https://github.com/StefH/Microsoft.Extensions.Caching.AzureTableStorage</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/stefh/Microsoft.Extensions.Caching.AzureTableStorage/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/stefh/Microsoft.Extensions.Caching.AzureTableStorage</RepositoryUrl>
+    <DebugType>full</DebugType>
+    <IncludeSymbols>True</IncludeSymbols>
+    <ProjectGuid>{EE65A912-FC2F-4FF8-8717-7332267EE8E8}</ProjectGuid>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <!--<LangVersion>7.1</LangVersion>-->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="windowsazure.storageextensions" Version="1.2.0" />
+  </ItemGroup>
+
+</Project>
