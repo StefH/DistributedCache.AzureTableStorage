@@ -9,7 +9,7 @@
     <PackageId>DistributedCache.AzureTableStorage</PackageId>
     <PackageTags>cache azure table storage</PackageTags>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-    <!--<PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/auth0-logo.png</PackageIconUrl>-->
+    <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
