@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
+﻿using DistributedCache.AzureTableStorage.Extensions;
+using DistributedCache.AzureTableStorage.Options;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
-using System.Threading;
-using DistributedCache.AzureTableStorage.Extensions;
-using DistributedCache.AzureTableStorage.Implementations;
-using DistributedCache.AzureTableStorage.Options;
+using System.Threading.Tasks;
 
 namespace ConsoleAppExample
 {
@@ -13,18 +13,42 @@ namespace ConsoleAppExample
     {
         static void Main(string[] args)
         {
-            var options = Options.Create(
-                new AzureTableStorageCacheOptions
-                {
-                    TableName = "CacheTest",
-                    PartitionKey = "ConsoleApp",
-                    //Separator = ":",
-                    ConnectionString = "UseDevelopmentStorage=true;"
-                }
-            );
+            // Create ServiceCollection
+            var services = new ServiceCollection();
 
-            IDistributedCache cache = new AzureTableStorageCache(options);
+            // Configure
+            services.Configure<AzureTableStorageCacheOptions>(options =>
+            {
+                options.TableName = "CacheTest";
+                options.PartitionKey = "ConsoleApp";
+                options.ConnectionString = "UseDevelopmentStorage=true;";
+            });
 
+            // Add logging & services
+            services.AddLogging(builder =>
+            {
+                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.AddConsole();
+                builder.AddDebug();
+            });
+            services.AddDistributedAzureTableStorageCache();
+
+            // Build ServiceProvider
+            var serviceProvider = services.BuildServiceProvider();
+
+            // Resolve ILoggerFactory and ILogger via DI
+            var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
+            logger.LogInformation("Start...");
+
+            // Resolve IDistributedCache via DI
+            var cache = serviceProvider.GetService<IDistributedCache>();
+
+            // Run tests
+            TestAsync(logger, cache).GetAwaiter().GetResult();
+        }
+
+        private static async Task TestAsync(ILogger logger, IDistributedCache cache)
+        {
             var test = new TestModel
             {
                 Id = 1,
@@ -32,23 +56,22 @@ namespace ConsoleAppExample
             };
 
             var cacheOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(3) };
-            cache.SetAsync("t1", test, cacheOptions).GetAwaiter().GetResult();
+            await cache.SetAsync("t1", test, cacheOptions);
 
-            var t2 = cache.GetAsync<TestModel>("t1").GetAwaiter().GetResult();
+            var t2 = await cache.GetAsync<TestModel>("t1");
+            logger.LogInformation("t2 : {TestModel}", JsonConvert.SerializeObject(t2));
 
-            Console.WriteLine("t2" + JsonConvert.SerializeObject(t2));
+            await Task.Delay(TimeSpan.FromSeconds(2));
 
-            int x = 0;
+            var t3 = await cache.GetAsync<TestModel>("t1");
+            logger.LogInformation("t3 : {TestModel}", JsonConvert.SerializeObject(t3));
 
-            Thread.Sleep(TimeSpan.FromSeconds(2));
+            await Task.Delay(TimeSpan.FromSeconds(2));
 
-            var t3 = cache.GetAsync<TestModel>("t1").GetAwaiter().GetResult();
-            Console.WriteLine("t3" + JsonConvert.SerializeObject(t3));
+            var t4 = await cache.GetAsync<TestModel>("t1");
+            logger.LogInformation("t4 : {TestModel}", JsonConvert.SerializeObject(t4));
 
-            Thread.Sleep(TimeSpan.FromSeconds(2));
-
-            var t4 = cache.GetAsync<TestModel>("t1").GetAwaiter().GetResult();
-            Console.WriteLine("t4" + JsonConvert.SerializeObject(t4));
+            await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
 }
