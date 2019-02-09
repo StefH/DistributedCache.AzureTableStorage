@@ -7,8 +7,7 @@ namespace DistributedCache.AzureTableStorage.Extensions
 {
     internal static class BinarySerializerExtensions
     {
-        [CanBeNull]
-        public static byte[] ToByteArray(this object obj)
+        public static byte[] ToByteArray([CanBeNull] this object obj)
         {
             if (obj == null)
             {
@@ -25,7 +24,7 @@ namespace DistributedCache.AzureTableStorage.Extensions
             }
         }
 
-        public static T FromByteArray<T>(this byte[] data) where T : class
+        public static T FromByteArray<T>([CanBeNull] this byte[] data) where T : class
         {
             if (data == null)
             {

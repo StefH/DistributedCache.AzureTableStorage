@@ -96,12 +96,15 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <inheritdoc cref="IDistributedCache.RemoveAsync(string, CancellationToken)"/>
-        public Task RemoveAsync([NotNull] string key, CancellationToken token = default(CancellationToken))
+        public async Task RemoveAsync([NotNull] string key, CancellationToken token = default(CancellationToken))
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            CachedItem item = RetrieveAsync(key).Result;
-            return item != null ? _tableSet.RemoveAsync(item, token) : Task.CompletedTask;
+            var item = await RetrieveAsync(key);
+            if (item != null)
+            {
+                await _tableSet.RemoveAsync(item, token);
+            }
         }
 
         /// <inheritdoc cref="IDistributedCache.Set(string, byte[], DistributedCacheEntryOptions)"/>
