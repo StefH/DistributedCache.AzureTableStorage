@@ -115,31 +115,14 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <inheritdoc cref="IDistributedCache.SetAsync(string, byte[], DistributedCacheEntryOptions, CancellationToken)"/>
-        public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
+        public Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
         {
             Guard.NotNullOrEmpty(key, nameof(key));
             Guard.NotNullOrEmpty(value, nameof(value));
             Guard.NotNull(options, nameof(options));
 
-            DateTimeOffset? absoluteExpiration = null;
-            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
-
-            if (options.AbsoluteExpirationRelativeToNow.HasValue)
-            {
-                absoluteExpiration = currentTime.Add(options.AbsoluteExpirationRelativeToNow.Value);
-            }
-            else if (options.AbsoluteExpiration.HasValue)
-            {
-                if (options.AbsoluteExpiration.Value <= currentTime)
-                {
-                    throw new ArgumentOutOfRangeException(
-                       nameof(options.AbsoluteExpiration),
-                       options.AbsoluteExpiration.Value,
-                       "The absolute expiration value must be in the future.");
-                }
-
-                absoluteExpiration = options.AbsoluteExpiration;
-            }
+            var currentTime = DateTimeOffset.UtcNow;
+            var absoluteExpiration = ParseOptions(options, currentTime);
 
             var item = new CachedItem
             {
@@ -159,7 +142,27 @@ namespace DistributedCache.AzureTableStorage.Implementations
                 item.SlidingExpiration = options.SlidingExpiration;
             }
 
-            await _tableSet.AddOrUpdateAsync(item, token);
+            return _tableSet.AddOrUpdateAsync(item, token);
+        }
+
+        private DateTimeOffset? ParseOptions(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
+        {
+            if (options.AbsoluteExpirationRelativeToNow.HasValue)
+            {
+                return currentTime.Add(options.AbsoluteExpirationRelativeToNow.Value);
+            }
+
+            if (options.AbsoluteExpiration.HasValue)
+            {
+                if (options.AbsoluteExpiration.Value <= currentTime)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(options.AbsoluteExpiration), options.AbsoluteExpiration.Value, "The absolute expiration value must be in the future.");
+                }
+
+                return options.AbsoluteExpiration;
+            }
+
+            return null;
         }
 
         private Task<CachedItem> RetrieveAsync(string key)
