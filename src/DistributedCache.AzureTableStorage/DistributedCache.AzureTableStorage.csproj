@@ -7,7 +7,7 @@
     <Copyright>Stuart Whiteford</Copyright>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageId>DistributedCache.AzureTableStorage</PackageId>
-    <PackageTags>cache azure table storage</PackageTags>
+    <PackageTags>DistributedCache Cache Azure Table Storage</PackageTags>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
