@@ -1,13 +1,15 @@
 ﻿using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
-namespace DistributedCache.AzureTableStorage.Extensions
+namespace DistributedCache.AzureTableStorage.Utils
 {
-    internal static class BinarySerializerExtensions
+    internal static class BinarySerializer
     {
-        public static byte[] ToByteArray([CanBeNull] this object obj)
+        public static byte[] Serialize([CanBeNull] object obj)
         {
             if (obj == null)
             {
@@ -24,7 +26,7 @@ namespace DistributedCache.AzureTableStorage.Extensions
             }
         }
 
-        public static T FromByteArray<T>([CanBeNull] this byte[] data) where T : class
+        public static T Deserialize<T>([CanBeNull] byte[] data) where T : class
         {
             if (data == null)
             {
@@ -34,6 +36,11 @@ namespace DistributedCache.AzureTableStorage.Extensions
             var memoryStream = new MemoryStream(data);
             using (var reader = new BsonDataReader(memoryStream))
             {
+                if (typeof(T).GetInterfaces().Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
+                {
+                    reader.ReadRootValueAsArray = true;
+                }
+
                 var serializer = new JsonSerializer();
                 return serializer.Deserialize<T>(reader);
             }
