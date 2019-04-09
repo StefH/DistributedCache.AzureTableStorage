@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleAppExample
+﻿namespace ConsoleAppExample
 {
     public class TestModel
     {

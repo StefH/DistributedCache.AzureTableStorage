@@ -1,4 +1,4 @@
-# DistributedCache.AzureTableStorage
+# ![logo](resources/AzureTableStorage_logo_64x64.png?raw=true) DistributedCache.AzureTableStorage
 
 * Based on [oceanweb/azuretablestoragecache](https://gitlab.com/oceanweb/azuretablestoragecache) but with lower dependencies.
 * Extra added logic to use strongly typed objects with IDistributedCache instead of byte arrays.

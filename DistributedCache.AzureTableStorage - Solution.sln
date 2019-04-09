@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF60A9C5-549D-46BC-B782-7B7AD1C207D0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		azure-pipelines.yml = azure-pipelines.yml
 		CHANGELOG.md = CHANGELOG.md
 		Directory.Build.props = Directory.Build.props
 		GitHubReleaseNotes.txt = GitHubReleaseNotes.txt
@@ -23,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTable
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F10F13A1-4FCB-41B3-98D5-F18425B3A2CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributedCache.AzureTableStorage.Tests", "tests\DistributedCache.AzureTableStorage.Tests\DistributedCache.AzureTableStorage.Tests.csproj", "{519A54B2-03A4-4705-A1FD-443EBF7243BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.Tests", "tests\DistributedCache.AzureTableStorage.Tests\DistributedCache.AzureTableStorage.Tests.csproj", "{519A54B2-03A4-4705-A1FD-443EBF7243BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
