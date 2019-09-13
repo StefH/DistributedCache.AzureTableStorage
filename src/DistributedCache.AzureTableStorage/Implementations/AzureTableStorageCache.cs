@@ -1,13 +1,13 @@
-﻿using DistributedCache.AzureTableStorage.Models;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DistributedCache.AzureTableStorage.Models;
 using DistributedCache.AzureTableStorage.Options;
 using DistributedCache.AzureTableStorage.Validation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using WindowsAzure.Table;
 using WindowsAzure.Table.Extensions;
 
@@ -53,9 +53,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            await RefreshAsync(key, token);
+            await RefreshAsync(key, token).ConfigureAwait(false);
 
-            CachedItem item = await RetrieveAsync(key);
+            CachedItem item = await RetrieveAsync(key).ConfigureAwait(false);
             return item?.Data;
         }
 
@@ -72,18 +72,18 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            var item = await RetrieveAsync(key);
+            var item = await RetrieveAsync(key).ConfigureAwait(false);
             if (item != null)
             {
                 if (ShouldDelete(item))
                 {
-                    await _tableSet.RemoveAsync(item, token);
+                    await _tableSet.RemoveAsync(item, token).ConfigureAwait(false);
                     return;
                 }
 
                 item.LastAccessTime = DateTimeOffset.UtcNow;
 
-                await _tableSet.UpdateAsync(item, token);
+                await _tableSet.UpdateAsync(item, token).ConfigureAwait(false);
             }
         }
 
@@ -100,10 +100,10 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            var item = await RetrieveAsync(key);
+            var item = await RetrieveAsync(key).ConfigureAwait(false);
             if (item != null)
             {
-                await _tableSet.RemoveAsync(item, token);
+                await _tableSet.RemoveAsync(item, token).ConfigureAwait(false);
             }
         }
 
@@ -188,14 +188,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
                 return true;
             }
 
-            if (item.SlidingExpiration.HasValue &&
-                item.LastAccessTime.HasValue &&
-                item.LastAccessTime.Value.Add(item.SlidingExpiration.Value) < currentTime)
-            {
-                return true;
-            }
-
-            return false;
+            return item.SlidingExpiration.HasValue &&
+                   item.LastAccessTime.HasValue &&
+                   item.LastAccessTime.Value.Add(item.SlidingExpiration.Value) < currentTime;
         }
     }
 }

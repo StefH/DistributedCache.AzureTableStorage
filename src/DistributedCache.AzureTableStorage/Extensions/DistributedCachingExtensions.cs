@@ -53,12 +53,12 @@ namespace DistributedCache.AzureTableStorage.Extensions
             // In case of string, just use the existing DistributedCacheExtensions
             if (typeof(T) == typeof(string))
             {
-                string stringValue = await distributedCache.GetStringAsync(key, token);
+                string stringValue = await distributedCache.GetStringAsync(key, token).ConfigureAwait(false);
 
                 return (T)Convert.ChangeType(stringValue, typeof(T));
             }
 
-            var result = await distributedCache.GetAsync(key, token);
+            var result = await distributedCache.GetAsync(key, token).ConfigureAwait(false);
 
             return BinarySerializer.Deserialize<T>(result);
         }
