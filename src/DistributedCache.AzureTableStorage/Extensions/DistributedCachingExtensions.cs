@@ -31,7 +31,7 @@ namespace DistributedCache.AzureTableStorage.Extensions
 
             if (typeof(T) == typeof(string))
             {
-                return distributedCache.SetStringAsync(key, value as string, token);
+                return distributedCache.SetStringAsync(key, value as string, options, token);
             }
 
             return distributedCache.SetAsync(key, BinarySerializer.Serialize(value), options, token);
