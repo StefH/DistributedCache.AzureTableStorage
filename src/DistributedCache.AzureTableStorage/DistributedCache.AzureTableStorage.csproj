@@ -11,11 +11,12 @@
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/LICENSE</PackageLicenseUrl>
+    <!--<PackageLicenseUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/LICENSE</PackageLicenseUrl>-->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/stefh/DistributedCache.AzureTableStorage</RepositoryUrl>
     <DebugType>full</DebugType>
-    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSymbols>False</IncludeSymbols>
     <ProjectGuid>{EE65A912-FC2F-4FF9-8717-7332267EE8E8}</ProjectGuid>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
