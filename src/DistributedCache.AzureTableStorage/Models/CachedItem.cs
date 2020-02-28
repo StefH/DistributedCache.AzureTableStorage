@@ -19,47 +19,47 @@ namespace DistributedCache.AzureTableStorage.Models
         /// </summary>
         public byte[] Data { get; set; }
 
-        /// <summary>
-        /// Gets or sets the sliding expiration in ticks.
-        /// </summary>
-        public long? SlidingExpirationTicks { get; set; }
+        ///// <summary>
+        ///// Gets or sets the sliding expiration in ticks.
+        ///// </summary>
+        //public long? SlidingExpirationTicks { get; set; }
+
+        ///// <summary>
+        ///// Gets or sets the sliding expiration as a <see cref="TimeSpan"/>.
+        ///// </summary>
+        ///// <remarks>
+        ///// Ignored as <see cref="TimeSpan"/> is not supported in Azure Table Storage.
+        ///// </remarks>
+        //[Ignore]
+        //public TimeSpan? SlidingExpiration
+        //{
+        //    get
+        //    {
+        //        if (SlidingExpirationTicks.HasValue)
+        //        {
+        //            return TimeSpan.FromTicks(SlidingExpirationTicks.Value);
+        //        }
+
+        //        return null;
+        //    }
+
+        //    set
+        //    {
+        //        if (value.HasValue)
+        //        {
+        //            SlidingExpirationTicks = value.Value.Ticks;
+        //        }
+        //    }
+        //}
 
         /// <summary>
-        /// Gets or sets the sliding expiration as a <see cref="TimeSpan"/>.
+        /// The absolute expiration date and time.
         /// </summary>
-        /// <remarks>
-        /// Ignored as <see cref="TimeSpan"/> is not supported in Azure table storage.
-        /// </remarks>
-        [Ignore]
-        public TimeSpan? SlidingExpiration
-        {
-            get
-            {
-                if (SlidingExpirationTicks.HasValue)
-                {
-                    return TimeSpan.FromTicks(SlidingExpirationTicks.Value);
-                }
-
-                return null;
-            }
-
-            set
-            {
-                if (value.HasValue)
-                {
-                    SlidingExpirationTicks = value.Value.Ticks;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the absolute expiration date and time.
-        /// </summary>
-        public DateTimeOffset? AbsoluteExpiration { get; set; }
+        public DateTimeOffset AbsoluteExpiration { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time the item was last accessed.
         /// </summary>
-        public DateTimeOffset? LastAccessTime { get; set; }
+        public DateTimeOffset LastAccessTime { get; set; }
     }
 }
