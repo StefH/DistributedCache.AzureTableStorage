@@ -177,7 +177,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             Guard.NotNull(options, nameof(options));
 
             var utcNow = _systemClock.UtcNow;
-            var absoluteExpiration = ParseOptions(options, utcNow);
+            var expiresAtTime = GetExpiresAtTime(options, utcNow);
 
             var item = new CachedItem
             {
@@ -185,7 +185,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
                 RowKey = key,
                 Data = value,
                 LastAccessTime = utcNow,
-                AbsoluteExpiration = absoluteExpiration
+                ExpiresAtTime = expiresAtTime
             };
 
             //if (absoluteExpiration.HasValue)
@@ -204,7 +204,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             ScanForExpiredItemsIfRequired();
         }
 
-        private DateTimeOffset ParseOptions(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
+        private DateTimeOffset GetExpiresAtTime(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
         {
             if (options.AbsoluteExpirationRelativeToNow.HasValue)
             {
@@ -230,7 +230,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <summary>
-        /// Checks whether the cached item should be deleted based on the absolute or sliding expiration values.
+        /// Checks whether the cached item should be deleted based on the ExpiresAtTime value.
         /// </summary>
         /// <param name="item">The <see cref="CachedItem" />.</param>
         /// <returns>
@@ -240,7 +240,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             var utcNow = _systemClock.UtcNow;
 
-            return item.AbsoluteExpiration <= utcNow;
+            return item.ExpiresAtTime <= utcNow;
             //if (item.AbsoluteExpiration != null && item.AbsoluteExpiration.Value <= utcNow)
             //{
             //    return true;
@@ -257,8 +257,8 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             var utcNow = _systemClock.UtcNow;
 
-            // TODO: Multiple threads could trigger this scan which leads to multiple calls to database.
-            if ((utcNow - _lastExpirationScan) > _expiredItemsDeletionInterval)
+            // TODO: Multiple threads could trigger this scan which leads to multiple calls to Azure Table Storage.
+            if (utcNow - _lastExpirationScan > _expiredItemsDeletionInterval)
             {
                 _lastExpirationScan = utcNow;
                 Task.Run(_deleteExpiredCachedItemsDelegate);
@@ -270,7 +270,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             var utcNow = _systemClock.UtcNow;
 
             var itemsToDelete = await _tableSet.Value
-                .Where(item => item.PartitionKey == _partitionKey && item.AbsoluteExpiration <= utcNow)
+                .Where(item => item.PartitionKey == _partitionKey && item.ExpiresAtTime <= utcNow)
                 .ToListAsync();
 
             try

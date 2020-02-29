@@ -53,9 +53,9 @@ namespace DistributedCache.AzureTableStorage.Models
         //}
 
         /// <summary>
-        /// The absolute expiration date and time.
+        /// The absolute expiration date for the cache entry.
         /// </summary>
-        public DateTimeOffset AbsoluteExpiration { get; set; }
+        public DateTimeOffset ExpiresAtTime { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time the item was last accessed.
