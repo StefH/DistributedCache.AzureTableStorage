@@ -72,15 +72,17 @@ namespace ConsoleAppExample
             var t4 = await cache.GetAsync<TestModel>("t1");
             logger.LogInformation("t4 : {TestModel}", JsonConvert.SerializeObject(t4));
 
-            await cache.SetAsync("string-x-1", "testabc", cacheOptions);
+            string stringKey = "string-" + Guid.NewGuid();
+            await cache.SetAsync(stringKey, "testabc", cacheOptions);
 
-            var stringResult = await cache.GetAsync<string>("string-1");
+            var stringResult = await cache.GetAsync<string>(stringKey);
             logger.LogInformation("stringResult : {stringResult}", stringResult);
 
+            string arrayKey = "array-" + Guid.NewGuid();
             cacheOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(4) };
-            await cache.SetAsync("array-test-1", new[] { "a", "b" }, cacheOptions);
+            await cache.SetAsync(arrayKey, new[] { "a", "b" }, cacheOptions);
 
-            var arrayResult = await cache.GetAsync<string[]>("array-test-1");
+            var arrayResult = await cache.GetAsync<string[]>(arrayKey);
             logger.LogInformation("arrayResult : {arrayResult}", JsonConvert.SerializeObject(arrayResult));
 
             await Task.Delay(TimeSpan.FromSeconds(1));
