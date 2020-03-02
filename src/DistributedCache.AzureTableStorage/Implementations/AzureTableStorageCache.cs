@@ -185,7 +185,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
                 RowKey = key,
                 Data = value,
                 LastAccessTime = utcNow,
-                ExpiresAtTime = expiresAtTime
+                AbsoluteExpiration = expiresAtTime
             };
 
             //if (absoluteExpiration.HasValue)
@@ -230,7 +230,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <summary>
-        /// Checks whether the cached item should be deleted based on the ExpiresAtTime value.
+        /// Checks whether the cached item should be deleted based on the AbsoluteExpiration value.
         /// </summary>
         /// <param name="item">The <see cref="CachedItem" />.</param>
         /// <returns>
@@ -240,7 +240,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             var utcNow = _systemClock.UtcNow;
 
-            return item.ExpiresAtTime <= utcNow;
+            return item.AbsoluteExpiration <= utcNow;
             //if (item.AbsoluteExpiration != null && item.AbsoluteExpiration.Value <= utcNow)
             //{
             //    return true;
@@ -270,7 +270,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             var utcNow = _systemClock.UtcNow;
 
             var itemsToDelete = await _tableSet.Value
-                .Where(item => item.PartitionKey == _partitionKey && item.ExpiresAtTime <= utcNow)
+                .Where(item => item.PartitionKey == _partitionKey && item.AbsoluteExpiration <= utcNow)
                 .ToListAsync();
 
             try
