@@ -7,11 +7,11 @@ using DistributedCache.AzureTableStorage.Options;
 using DistributedCache.AzureTableStorage.Validation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using WindowsAzure.Table;
 using WindowsAzure.Table.Extensions;
-using Microsoft.Extensions.Internal;
 
 namespace DistributedCache.AzureTableStorage.Implementations
 {
