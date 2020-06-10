@@ -4,9 +4,12 @@
 * Extra added logic to use strongly typed objects with IDistributedCache instead of byte arrays.
 
 ## Info
-| | |
-| --- | --- |
-| **NuGet** | [![NuGet Badge](https://buildstats.info/nuget/DistributedCache.AzureTableStorage)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage) |
+| Version | Dependencies |
+| :--- | :--- | 
+[![V1](https://img.shields.io/badge/nuget-v1.1.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/1.1.0) | [Windows.Azure.Storage](https://www.nuget.org/packages/WindowsAzure.Storage/) `*` |
+[![V1](https://img.shields.io/badge/nuget-v2.0.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.0.0) | [Microsoft.Azure.Cosmos.Table](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/2.0.0-preview) |
+
+`*` This dependency is declared deprecated by Microsoft.
 
 ## Code example
 
