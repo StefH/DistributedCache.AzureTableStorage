@@ -9,9 +9,14 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
-using Microsoft.WindowsAzure.Storage;
 using WindowsAzure.Table;
 using WindowsAzure.Table.Extensions;
+#if WINDOWSAZURE
+using Microsoft.WindowsAzure.Storage;
+#else
+using Microsoft.Azure.Cosmos.Table;
+#endif
+
 
 namespace DistributedCache.AzureTableStorage.Implementations
 {

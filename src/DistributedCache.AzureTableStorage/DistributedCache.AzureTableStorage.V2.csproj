@@ -6,12 +6,12 @@
     <Authors>Stef Heyenrath</Authors>
     <Copyright>Stuart Whiteford;Stef Heyenrath</Copyright>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <VersionPrefix>2.0.0-preview-02</VersionPrefix>
     <PackageId>DistributedCache.AzureTableStorage</PackageId>
     <PackageTags>DistributedCache Cache Azure Table Storage</PackageTags>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
-    <!--<PackageLicenseUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/LICENSE</PackageLicenseUrl>-->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/stefh/DistributedCache.AzureTableStorage</RepositoryUrl>
@@ -22,6 +22,9 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
+    <RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+    <DefineConstants>$(DefineConstants);WINDOWSAZURE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
