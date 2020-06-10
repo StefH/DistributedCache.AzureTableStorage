@@ -1,44 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Title>DistributedCache.AzureTableStorage</Title>
-    <AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
-    <RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
-    <PackageId>DistributedCache.AzureTableStorage</PackageId>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <Copyright>Stef Heyenrath</Copyright>
-    <VersionPrefix>2.0.0-preview-03</VersionPrefix>
-    <ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
-  </PropertyGroup>
+	<PropertyGroup>
+		<VersionPrefix>2.0.0-preview-03</VersionPrefix>
+		<Title>DistributedCache.AzureTableStorage</Title>
+		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
+		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+		<PackageId>DistributedCache.AzureTableStorage</PackageId>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<Copyright>Stef Heyenrath</Copyright>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+		<ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="..\DistributedCache.AzureTableStorage\*\AssemblyInfo.cs" />
-    <Compile Include="..\DistributedCache.AzureTableStorage\*.cs;..\DistributedCache.AzureTableStorage\**\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="..\DistributedCache.AzureTableStorage\obj\**\**" />
-    <Compile Remove="..\DistributedCache.AzureTableStorage\bin\**\**" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<PathMap>$(MSBuildProjectDirectory)=/</PathMap>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="2.0.0-preview " />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
-    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="..\DistributedCache.AzureTableStorage\*\AssemblyInfo.cs" />
+		<Compile Include="..\DistributedCache.AzureTableStorage\*.cs;..\DistributedCache.AzureTableStorage\**\*.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="..\DistributedCache.AzureTableStorage\obj\**\**" />
+		<Compile Remove="..\DistributedCache.AzureTableStorage\bin\**\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\_fork\WindowsAzure\MicrosoftAzureCosmosTable.Extensions\MicrosoftAzureCosmosTable.Extensions.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2019.1.3">
+			<PrivateAssets>All</PrivateAssets>
+		</PackageReference>
+		<!--<PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="2.0.0-preview" />-->
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MicrosoftAzureCosmosTable.Extensions" Version="2.0.0-preview-00" />
+		<!--<ProjectReference Include="..\..\..\_fork\WindowsAzure\MicrosoftAzureCosmosTable.Extensions\MicrosoftAzureCosmosTable.Extensions.csproj" />-->
+	</ItemGroup>
 
 </Project>
