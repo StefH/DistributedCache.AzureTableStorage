@@ -13,8 +13,4 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\DistributedCache.AzureTableStorage\DistributedCache.AzureTableStorage.V2.csproj" />
-  </ItemGroup>
-
 </Project>

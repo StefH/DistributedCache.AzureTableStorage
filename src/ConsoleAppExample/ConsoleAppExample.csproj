@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DistributedCache.AzureTableStorage\DistributedCache.AzureTableStorage.V2.csproj" />
+    <ProjectReference Include="..\DistributedCache.AzureTableStorage\DistributedCache.AzureTableStorage.csproj" />
   </ItemGroup>
 
 </Project>

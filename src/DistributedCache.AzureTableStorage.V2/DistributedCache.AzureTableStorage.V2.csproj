@@ -1,29 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
     <Title>DistributedCache.AzureTableStorage</Title>
-    <Authors>Stef Heyenrath</Authors>
-    <Copyright>Stef Heyenrath</Copyright>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <VersionPrefix>3.0.0-preview-02</VersionPrefix>
-    <PackageId>DistributedCache.AzureTableStorage</PackageId>
-    <PackageTags>DistributedCache Cache Azure Table Storage</PackageTags>
-    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/stefh/DistributedCache.AzureTableStorage</RepositoryUrl>
-    <DebugType>full</DebugType>
-    <IncludeSymbols>False</IncludeSymbols>
-    <ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
     <RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+    <PackageId>DistributedCache.AzureTableStorage</PackageId>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Copyright>Stef Heyenrath</Copyright>
+    <VersionPrefix>2.0.0-preview-03</VersionPrefix>
+    <ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
