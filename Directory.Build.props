@@ -4,7 +4,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!--<VersionPrefix>2.0.0-preview-02</VersionPrefix>-->
     <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
     <Authors>Stef Heyenrath</Authors>
     <PackageTags>Distributed DistributedCache Cache Azure Table Storage</PackageTags>

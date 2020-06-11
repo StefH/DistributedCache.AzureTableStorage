@@ -29,7 +29,7 @@ services.Configure<AzureTableStorageCacheOptions>(options =>
 
 ### Notes
 - If the TableName does not exists, it's created. If you want to disable this behaviour, set the `options.CreateTableIfNotExists` to `false`;
-- When an item is retrieved or added to to the cache, a periodic interval scan is done to find and delete expired items in the cache. Default is 30 minutes. If you want to change this, set the `options.ExpiredItemsDeletionInterval` to a different value. Set the value to `null` if you don't want to expire the items automatically.
+- When an item is retrieved or added to to the cache, a periodic interval scan can be done to find and delete expired items in the cache. Default this is set to null, which means that this functionality is disabled. If you want to change this, set the `options.ExpiredItemsDeletionInterval` to a different value, like `TimeSpan.FromMinutes(30)`.
 
 ### Configure via appsettings.json (option 2)
 

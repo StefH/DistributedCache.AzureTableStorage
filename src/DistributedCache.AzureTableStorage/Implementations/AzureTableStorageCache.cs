@@ -27,11 +27,8 @@ namespace DistributedCache.AzureTableStorage.Implementations
     public class AzureTableStorageCache : IDistributedCache
     {
         private static readonly TimeSpan MinimumExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
-        private static readonly TimeSpan DefaultExpiredItemsDeletionInterval = TimeSpan.FromMinutes(30);
-
-        //private readonly AzureTableStorageCacheOptions _options;
         private readonly ISystemClock _systemClock;
-        private readonly TimeSpan _expiredItemsDeletionInterval;
+        private readonly TimeSpan? _expiredItemsDeletionInterval;
         private DateTimeOffset _lastExpirationScan;
         private readonly Func<Task> _deleteExpiredCachedItemsDelegate;
         private readonly string _partitionKey;
@@ -59,7 +56,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             }
 
             _systemClock = cacheOptions.SystemClock ?? new SystemClock();
-            _expiredItemsDeletionInterval = cacheOptions.ExpiredItemsDeletionInterval ?? DefaultExpiredItemsDeletionInterval;
+            _expiredItemsDeletionInterval = cacheOptions.ExpiredItemsDeletionInterval;
             _deleteExpiredCachedItemsDelegate = DeleteExpiredCacheItems;
             _partitionKey = cacheOptions.PartitionKey;
 
@@ -81,7 +78,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <inheritdoc cref="IDistributedCache.Get(string)"/>
-        public byte[] Get(string key)
+        public byte[]? Get(string key)
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
@@ -93,7 +90,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <inheritdoc cref="IDistributedCache.GetAsync(string, CancellationToken)"/>
-        public async Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken))
+        public async Task<byte[]?> GetAsync(string key, CancellationToken token = default)
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 

@@ -9,15 +9,17 @@ namespace DistributedCache.AzureTableStorage.Models
     public class CachedItem
     {
         [PartitionKey]
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public string PartitionKey { get; set; }
 
         [RowKey]
         public string RowKey { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         /// <summary>
         /// Gets or sets the data.
         /// </summary>
-        public byte[] Data { get; set; }
+        public byte[]? Data { get; set; }
 
         ///// <summary>
         ///// Gets or sets the sliding expiration in ticks.
