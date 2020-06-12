@@ -1,44 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
-    <Title>DistributedCache.AzureTableStorage</Title>
-    <Authors>Stef Heyenrath</Authors>
-    <Copyright>Stuart Whiteford;Stef Heyenrath</Copyright>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <PackageId>DistributedCache.AzureTableStorage</PackageId>
-    <PackageTags>DistributedCache Cache Azure Table Storage</PackageTags>
-    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/stefh/DistributedCache.AzureTableStorage</RepositoryUrl>
-    <DebugType>full</DebugType>
-    <IncludeSymbols>True</IncludeSymbols>
-    <ProjectGuid>{EE65A912-FC2F-4FF9-8717-7332267EE8E8}</ProjectGuid>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<VersionPrefix>1.1.0</VersionPrefix>
+		<Title>DistributedCache.AzureTableStorage</Title>
+		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
+		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+		<PackageId>DistributedCache.AzureTableStorage</PackageId>
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<Copyright>Stuart Whiteford;Stef Heyenrath</Copyright>
+		<ProjectGuid>{EE65A912-FC2F-4FF9-8717-7332267EE8E8}</ProjectGuid>
+		<DefineConstants>$(DefineConstants);WINDOWSAZURE</DefineConstants>
+		<LangVersion>8.0</LangVersion>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
-    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="windowsazure.storageextensions" Version="1.2.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
+			<PrivateAssets>All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+		<PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+		<PackageReference Include="windowsazure.storageextensions" Version="1.2.0" />
+	</ItemGroup>
 
 </Project>

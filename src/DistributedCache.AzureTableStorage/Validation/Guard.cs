@@ -74,9 +74,9 @@ namespace DistributedCache.AzureTableStorage.Validation
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static string NotNullOrEmpty(string value, [InvokerParameterName] [NotNull] string parameterName)
+        public static string? NotNullOrEmpty(string? value, [InvokerParameterName] [NotNull] string parameterName)
         {
-            Exception e = null;
+            Exception? e = null;
             if (ReferenceEquals(value, null))
             {
                 e = new ArgumentNullException(parameterName);
@@ -96,7 +96,7 @@ namespace DistributedCache.AzureTableStorage.Validation
             return value;
         }
 
-        public static string NullButNotEmpty(string value, [InvokerParameterName] [NotNull] string parameterName)
+        public static string? NullButNotEmpty(string? value, [InvokerParameterName] [NotNull] string parameterName)
         {
             if (!ReferenceEquals(value, null)
                 && (value.Length == 0))

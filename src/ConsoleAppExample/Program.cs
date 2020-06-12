@@ -22,6 +22,7 @@ namespace ConsoleAppExample
                 options.TableName = "CacheTest";
                 options.PartitionKey = "ConsoleApp";
                 options.ConnectionString = "UseDevelopmentStorage=true;";
+                options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
             });
 
             // Add logging & services
@@ -71,15 +72,17 @@ namespace ConsoleAppExample
             var t4 = await cache.GetAsync<TestModel>("t1");
             logger.LogInformation("t4 : {TestModel}", JsonConvert.SerializeObject(t4));
 
-            await cache.SetAsync("string-1", "testabc", cacheOptions);
+            string stringKey = "string-" + Guid.NewGuid();
+            await cache.SetAsync(stringKey, "testabc", cacheOptions);
 
-            var stringResult = await cache.GetAsync<string>("string-1");
+            var stringResult = await cache.GetAsync<string>(stringKey);
             logger.LogInformation("stringResult : {stringResult}", stringResult);
 
-            cacheOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(3000) };
-            await cache.SetAsync("array-1", new[] { "a", "b" }, cacheOptions);
+            string arrayKey = "array-" + Guid.NewGuid();
+            cacheOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(4) };
+            await cache.SetAsync(arrayKey, new[] { "a", "b" }, cacheOptions);
 
-            var arrayResult = await cache.GetAsync<string[]>("array-1");
+            var arrayResult = await cache.GetAsync<string[]>(arrayKey);
             logger.LogInformation("arrayResult : {arrayResult}", JsonConvert.SerializeObject(arrayResult));
 
             await Task.Delay(TimeSpan.FromSeconds(1));

@@ -1,28 +1,47 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using Microsoft.Extensions.Internal;
+using Microsoft.Extensions.Options;
 
 namespace DistributedCache.AzureTableStorage.Options
 {
     /// <summary>
-    /// Configuration settings for the Azure table storage cache.
+    /// Configuration settings for the Azure Table Storage cache.
     /// </summary>
-    public class AzureTableStorageCacheOptions
+    public class AzureTableStorageCacheOptions : IOptions<AzureTableStorageCacheOptions>
     {
+        /// <summary>
+        /// An abstraction to represent the clock of a machine in order to enable unit testing.
+        /// </summary>
+        public ISystemClock? SystemClock { get; set; }
+
+        /// <summary>
+        /// The periodic interval to scan and delete expired items in the cache. Default this is set to null, which means that this functionality is disabled.
+        /// </summary>
+        public TimeSpan? ExpiredItemsDeletionInterval { get; set; }
+
         /// <summary>
         /// Gets or sets the connection string of the storage account.
         /// </summary>
-        [Required]
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public string ConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the table to use.
+        /// The name of the table to use.
         /// </summary>
-        [Required]
         public string TableName { get; set; }
 
         /// <summary>
-        /// Gets or sets the partition key to use.
+        /// The Partition Key to use.
         /// </summary>
-        [Required]
         public string PartitionKey { get; set; }
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+
+        /// <summary>
+        /// Creates the table 'TableName' if it does not already exist. Default is true.
+        /// </summary>
+        public bool CreateTableIfNotExists { get; set; } = true;
+        
+        /// <inheritdoc cref="IOptions{TOptions}.Value"/>
+        AzureTableStorageCacheOptions IOptions<AzureTableStorageCacheOptions>.Value => this;
     }
 }

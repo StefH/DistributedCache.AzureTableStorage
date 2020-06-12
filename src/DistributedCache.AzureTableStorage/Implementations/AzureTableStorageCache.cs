@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DistributedCache.AzureTableStorage.Models;
@@ -6,22 +7,32 @@ using DistributedCache.AzureTableStorage.Options;
 using DistributedCache.AzureTableStorage.Validation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
-using Microsoft.WindowsAzure.Storage;
 using WindowsAzure.Table;
 using WindowsAzure.Table.Extensions;
+#if WINDOWSAZURE
+using Microsoft.WindowsAzure.Storage;
+#else
+using Microsoft.Azure.Cosmos.Table;
+#endif
+
 
 namespace DistributedCache.AzureTableStorage.Implementations
 {
     /// <summary>
-    /// An <see cref="IDistributedCache"/> implementation to cache data in Azure table storage.
+    /// An <see cref="IDistributedCache"/> implementation to cache data in Azure Table Storage.
     /// </summary>
     /// <seealso cref="IDistributedCache"/>.
     public class AzureTableStorageCache : IDistributedCache
     {
-        private readonly AzureTableStorageCacheOptions _options;
-
-        private readonly ITableSet<CachedItem> _tableSet;
+        private static readonly TimeSpan MinimumExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
+        private readonly ISystemClock _systemClock;
+        private readonly TimeSpan? _expiredItemsDeletionInterval;
+        private DateTimeOffset _lastExpirationScan;
+        private readonly Func<Task> _deleteExpiredCachedItemsDelegate;
+        private readonly string _partitionKey;
+        private readonly Lazy<ITableSet<CachedItem>> _tableSet;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureTableStorageCache"/> class.
@@ -31,31 +42,64 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNull(options, nameof(options));
 
-            _options = options.Value;
+            var cacheOptions = options.Value;
 
-            // Create CloudTableClient
-            var client = CloudStorageAccount.Parse(_options.ConnectionString).CreateCloudTableClient();
+            Guard.NotNullOrEmpty(cacheOptions.ConnectionString, nameof(AzureTableStorageCacheOptions.ConnectionString));
+            Guard.NotNullOrEmpty(cacheOptions.TableName, nameof(AzureTableStorageCacheOptions.TableName));
+            Guard.NotNullOrEmpty(cacheOptions.PartitionKey, nameof(AzureTableStorageCacheOptions.PartitionKey));
 
-            // Create TableSet
-            _tableSet = new TableSet<CachedItem>(client, _options.TableName);
+            if (cacheOptions.ExpiredItemsDeletionInterval.HasValue && cacheOptions.ExpiredItemsDeletionInterval.Value < MinimumExpiredItemsDeletionInterval)
+            {
+                throw new ArgumentException(
+                    $"{nameof(AzureTableStorageCacheOptions.ExpiredItemsDeletionInterval)} cannot be less than the minimum " +
+                    $"value of {MinimumExpiredItemsDeletionInterval.TotalMinutes} minutes.");
+            }
+
+            _systemClock = cacheOptions.SystemClock ?? new SystemClock();
+            _expiredItemsDeletionInterval = cacheOptions.ExpiredItemsDeletionInterval;
+            _deleteExpiredCachedItemsDelegate = DeleteExpiredCacheItems;
+            _partitionKey = cacheOptions.PartitionKey;
+
+            _tableSet = new Lazy<ITableSet<CachedItem>>(() =>
+            {
+                // Create CloudTableClient
+                var client = CloudStorageAccount.Parse(cacheOptions.ConnectionString).CreateCloudTableClient();
+
+                // Create TableSet
+                var tableSet = new TableSet<CachedItem>(client, cacheOptions.TableName);
+
+                if (cacheOptions.CreateTableIfNotExists)
+                {
+                    tableSet.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+                }
+
+                return tableSet;
+            });
         }
 
         /// <inheritdoc cref="IDistributedCache.Get(string)"/>
-        public byte[] Get(string key)
+        public byte[]? Get(string key)
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            return GetAsync(key).Result;
+            var value = GetAsync(key).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            ScanForExpiredItemsIfRequired();
+
+            return value;
         }
 
         /// <inheritdoc cref="IDistributedCache.GetAsync(string, CancellationToken)"/>
-        public async Task<byte[]> GetAsync(string key, CancellationToken token = default(CancellationToken))
+        public async Task<byte[]?> GetAsync(string key, CancellationToken token = default)
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
             await RefreshAsync(key, token).ConfigureAwait(false);
 
             CachedItem item = await RetrieveAsync(key).ConfigureAwait(false);
+
+            ScanForExpiredItemsIfRequired();
+
             return item?.Data;
         }
 
@@ -64,7 +108,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 
-            RefreshAsync(key).Wait();
+            RefreshAsync(key).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            ScanForExpiredItemsIfRequired();
         }
 
         /// <inheritdoc cref="IDistributedCache.RefreshAsync(string, CancellationToken)"/>
@@ -77,14 +123,16 @@ namespace DistributedCache.AzureTableStorage.Implementations
             {
                 if (ShouldDelete(item))
                 {
-                    await _tableSet.RemoveAsync(item, token).ConfigureAwait(false);
+                    await _tableSet.Value.RemoveAsync(item, token).ConfigureAwait(false);
                     return;
                 }
 
-                item.LastAccessTime = DateTimeOffset.UtcNow;
+                item.LastAccessTime = _systemClock.UtcNow;
 
-                await _tableSet.UpdateAsync(item, token).ConfigureAwait(false);
+                await _tableSet.Value.UpdateAsync(item, token).ConfigureAwait(false);
             }
+
+            ScanForExpiredItemsIfRequired();
         }
 
         /// <inheritdoc cref="IDistributedCache.Remove(string)"/>
@@ -93,6 +141,8 @@ namespace DistributedCache.AzureTableStorage.Implementations
             Guard.NotNullOrEmpty(key, nameof(key));
 
             RemoveAsync(key).Wait();
+
+            ScanForExpiredItemsIfRequired();
         }
 
         /// <inheritdoc cref="IDistributedCache.RemoveAsync(string, CancellationToken)"/>
@@ -103,8 +153,10 @@ namespace DistributedCache.AzureTableStorage.Implementations
             var item = await RetrieveAsync(key).ConfigureAwait(false);
             if (item != null)
             {
-                await _tableSet.RemoveAsync(item, token).ConfigureAwait(false);
+                await _tableSet.Value.RemoveAsync(item, token).ConfigureAwait(false);
             }
+
+            ScanForExpiredItemsIfRequired();
         }
 
         /// <inheritdoc cref="IDistributedCache.Set(string, byte[], DistributedCacheEntryOptions)"/>
@@ -114,41 +166,47 @@ namespace DistributedCache.AzureTableStorage.Implementations
             Guard.NotNullOrEmpty(value, nameof(value));
             Guard.NotNull(options, nameof(options));
 
-            SetAsync(key, value, options).Wait();
+            SetAsync(key, value, options).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            ScanForExpiredItemsIfRequired();
         }
 
         /// <inheritdoc cref="IDistributedCache.SetAsync(string, byte[], DistributedCacheEntryOptions, CancellationToken)"/>
-        public Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
+        public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
         {
             Guard.NotNullOrEmpty(key, nameof(key));
             Guard.NotNullOrEmpty(value, nameof(value));
             Guard.NotNull(options, nameof(options));
 
-            var currentTime = DateTimeOffset.UtcNow;
-            var absoluteExpiration = ParseOptions(options, currentTime);
+            var utcNow = _systemClock.UtcNow;
+            var expiresAtTime = GetExpiresAtTime(options, utcNow);
 
             var item = new CachedItem
             {
-                PartitionKey = _options.PartitionKey,
+                PartitionKey = _partitionKey,
                 RowKey = key,
                 Data = value,
-                LastAccessTime = currentTime
+                LastAccessTime = utcNow,
+                AbsoluteExpiration = expiresAtTime
             };
 
-            if (absoluteExpiration.HasValue)
-            {
-                item.AbsoluteExpiration = absoluteExpiration;
-            }
+            //if (absoluteExpiration.HasValue)
+            //{
+            //    item.AbsoluteExpiration = absoluteExpiration;
+            //}
 
-            if (options.SlidingExpiration.HasValue)
-            {
-                item.SlidingExpiration = options.SlidingExpiration;
-            }
+            //if (options.SlidingExpiration.HasValue)
+            //{
+            //    throw new NotSupportedException("SlidingExpiration as TimeSpan is not supported in Azure Table Storage.");
+            //    //item.SlidingExpiration = options.SlidingExpiration;
+            //}
 
-            return _tableSet.AddOrUpdateAsync(item, token);
+            await _tableSet.Value.AddOrUpdateAsync(item, token);
+
+            ScanForExpiredItemsIfRequired();
         }
 
-        private DateTimeOffset? ParseOptions(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
+        private DateTimeOffset GetExpiresAtTime(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
         {
             if (options.AbsoluteExpirationRelativeToNow.HasValue)
             {
@@ -162,19 +220,19 @@ namespace DistributedCache.AzureTableStorage.Implementations
                     throw new ArgumentOutOfRangeException(nameof(options.AbsoluteExpiration), options.AbsoluteExpiration.Value, "The absolute expiration value must be in the future.");
                 }
 
-                return options.AbsoluteExpiration;
+                return options.AbsoluteExpiration.Value;
             }
 
-            return null;
+            throw new NotSupportedException("Only 'AbsoluteExpirationRelativeToNow' and 'AbsoluteExpiration' are supported in Azure Table Storage.");
         }
 
         private Task<CachedItem> RetrieveAsync(string key)
         {
-            return _tableSet.FirstOrDefaultAsync(e => e.PartitionKey == _options.PartitionKey && e.RowKey == key);
+            return _tableSet.Value.FirstOrDefaultAsync(e => e.PartitionKey == _partitionKey && e.RowKey == key);
         }
 
         /// <summary>
-        /// Checks whether the cached item should be deleted based on the absolute or sliding expiration values.
+        /// Checks whether the cached item should be deleted based on the AbsoluteExpiration value.
         /// </summary>
         /// <param name="item">The <see cref="CachedItem" />.</param>
         /// <returns>
@@ -182,15 +240,49 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// </returns>
         private bool ShouldDelete(CachedItem item)
         {
-            var currentTime = DateTimeOffset.UtcNow;
-            if (item.AbsoluteExpiration != null && item.AbsoluteExpiration.Value <= currentTime)
-            {
-                return true;
-            }
+            var utcNow = _systemClock.UtcNow;
 
-            return item.SlidingExpiration.HasValue &&
-                   item.LastAccessTime.HasValue &&
-                   item.LastAccessTime.Value.Add(item.SlidingExpiration.Value) < currentTime;
+            return item.AbsoluteExpiration <= utcNow;
+            //if (item.AbsoluteExpiration != null && item.AbsoluteExpiration.Value <= utcNow)
+            //{
+            //    return true;
+            //}
+
+            //return item.SlidingExpiration.HasValue &&
+            //       item.LastAccessTime.HasValue &&
+            //       item.LastAccessTime.Value.Add(item.SlidingExpiration.Value) < utcNow;
+        }
+
+        // Called by multiple actions to see how long it's been since we last checked for expired items.
+        // If sufficient time has elapsed then a scan is initiated on a background task.
+        private void ScanForExpiredItemsIfRequired()
+        {
+            var utcNow = _systemClock.UtcNow;
+
+            // TODO: Multiple threads could trigger this scan which leads to multiple calls to Azure Table Storage.
+            if (utcNow - _lastExpirationScan > _expiredItemsDeletionInterval)
+            {
+                _lastExpirationScan = utcNow;
+                Task.Run(_deleteExpiredCachedItemsDelegate);
+            }
+        }
+
+        private async Task DeleteExpiredCacheItems()
+        {
+            var utcNow = _systemClock.UtcNow;
+
+            var itemsToDelete = await _tableSet.Value
+                .Where(item => item.PartitionKey == _partitionKey && item.AbsoluteExpiration <= utcNow)
+                .ToListAsync();
+
+            try
+            {
+                await _tableSet.Value.RemoveAsync(itemsToDelete);
+            }
+            catch
+            {
+                // Just ignore any exceptions
+            }
         }
     }
 }

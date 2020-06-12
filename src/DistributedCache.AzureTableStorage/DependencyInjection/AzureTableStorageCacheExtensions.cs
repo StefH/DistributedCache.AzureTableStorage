@@ -9,7 +9,7 @@ using System;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Extension methods to add Azure table storage cache.
+    /// Extension methods to add Azure Table Storage cache.
     /// </summary>
     public static class AzureTableStorageCacheExtensions
     {

@@ -128,7 +128,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Contains("Parameter name: AbsoluteExpiration", ex.Message);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public void Set_KeyIsNotNull_ValueIsStored()
         {
             // Arrange
@@ -143,7 +143,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Equal(value, cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public async Task SetAsync_KeyIsNotNull_ValueIsStored()
         {
             // Arrange
@@ -206,7 +206,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Null(cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public void Get_ItemExists_ValueIsRetrieved()
         {
             // Arrange
@@ -221,7 +221,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Equal(value, cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public async Task GetAsync_ItemExists_ValueIsRetrieved()
         {
             // Arrange
@@ -328,7 +328,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Null(cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public void Get_ItemExists_SlidingExpirationHasExpired_ValueIsNull()
         {
             // Arrange
@@ -351,7 +351,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Null(cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public async Task GetAsync_ItemExists_SlidingExpirationHasExpired_ValueIsNull()
         {
             // Arrange
@@ -374,7 +374,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Null(cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public void Set_ItemWithKeyExists_ValueIsUpdated()
         {
             // Arrange
@@ -391,7 +391,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Equal(value, cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public async Task SetAsync_ItemWithKeyExists_ValueIsUpdated()
         {
             // Arrange
@@ -486,7 +486,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Null(cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public void Refresh_ValueIsRetrievedAfterOriginalSlidingExpirationHasExpired()
         {
             // Arrange
@@ -511,7 +511,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Equal(value, cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public async Task RefreshAsync_ValueIsRetrievedAfterOriginalSlidingExpirationHasExpired()
         {
             // Arrange
@@ -564,7 +564,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Contains("Parameter name: key", ex.Message);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public void Remove_ValueIsNull()
         {
             // Arrange
@@ -580,7 +580,7 @@ namespace DistributedCache.AzureTableStorage.Tests
             Assert.Null(cachedValue);
         }
 
-        [Fact]
+        [Fact(Skip = "SlidingExpiration is not supported")]
         public async Task RemoveAsync_ValueIsNull()
         {
             // Arrange
