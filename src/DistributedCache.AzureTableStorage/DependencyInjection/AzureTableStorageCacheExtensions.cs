@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         [PublicAPI]
-        public static IServiceCollection AddDistributedAzureTableStorageCache([NotNull] this IServiceCollection services)
+        public static IServiceCollection AddDistributedAzureTableStorageCache(this IServiceCollection services)
         {
             Guard.NotNull(services, nameof(services));
 
@@ -36,7 +36,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configureAction">The action used to configure the options.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         [PublicAPI]
-        public static IServiceCollection AddDistributedAzureTableStorageCache([NotNull] this IServiceCollection services, Action<AzureTableStorageCacheOptions> configureAction)
+        public static IServiceCollection AddDistributedAzureTableStorageCache(this IServiceCollection services, Action<AzureTableStorageCacheOptions> configureAction)
         {
             Guard.NotNull(services, nameof(services));
             Guard.NotNull(configureAction, nameof(configureAction));

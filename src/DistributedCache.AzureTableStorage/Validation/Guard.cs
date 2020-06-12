@@ -16,7 +16,7 @@ namespace DistributedCache.AzureTableStorage.Validation
     public static class Guard
     {
         [ContractAnnotation("value:null => halt")]
-        public static T Condition<T>([NoEnumeration] T value, [NotNull] Predicate<T> condition, [InvokerParameterName] [NotNull] string parameterName)
+        public static T Condition<T>([NoEnumeration] T value, Predicate<T> condition, [InvokerParameterName] string parameterName)
         {
             NotNull(condition, nameof(condition));
             NotNull(value, nameof(value));
@@ -32,7 +32,7 @@ namespace DistributedCache.AzureTableStorage.Validation
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static T NotNull<T>([NoEnumeration] T value, [InvokerParameterName] [NotNull] string parameterName)
+        public static T NotNull<T>([NoEnumeration] T value, [InvokerParameterName] string parameterName)
         {
             if (ReferenceEquals(value, null))
             {
@@ -45,7 +45,7 @@ namespace DistributedCache.AzureTableStorage.Validation
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static T NotNull<T>([NoEnumeration] T value, [InvokerParameterName] [NotNull] string parameterName, [NotNull] string propertyName)
+        public static T NotNull<T>([NoEnumeration] T value, [InvokerParameterName] string parameterName, string propertyName)
         {
             if (ReferenceEquals(value, null))
             {
@@ -59,7 +59,7 @@ namespace DistributedCache.AzureTableStorage.Validation
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static IList<T> NotNullOrEmpty<T>(IList<T> value, [InvokerParameterName] [NotNull] string parameterName)
+        public static IList<T> NotNullOrEmpty<T>(IList<T> value, [InvokerParameterName] string parameterName)
         {
             NotNull(value, parameterName);
 
@@ -74,7 +74,7 @@ namespace DistributedCache.AzureTableStorage.Validation
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static string? NotNullOrEmpty(string? value, [InvokerParameterName] [NotNull] string parameterName)
+        public static string? NotNullOrEmpty(string? value, [InvokerParameterName] string parameterName)
         {
             Exception? e = null;
             if (ReferenceEquals(value, null))
@@ -96,7 +96,7 @@ namespace DistributedCache.AzureTableStorage.Validation
             return value;
         }
 
-        public static string? NullButNotEmpty(string? value, [InvokerParameterName] [NotNull] string parameterName)
+        public static string? NullButNotEmpty(string? value, [InvokerParameterName] string parameterName)
         {
             if (!ReferenceEquals(value, null)
                 && (value.Length == 0))
@@ -109,7 +109,7 @@ namespace DistributedCache.AzureTableStorage.Validation
             return value;
         }
 
-        public static IList<T> HasNoNulls<T>(IList<T> value, [InvokerParameterName] [NotNull] string parameterName)
+        public static IList<T> HasNoNulls<T>(IList<T> value, [InvokerParameterName] string parameterName)
             where T : class
         {
             NotNull(value, parameterName);
