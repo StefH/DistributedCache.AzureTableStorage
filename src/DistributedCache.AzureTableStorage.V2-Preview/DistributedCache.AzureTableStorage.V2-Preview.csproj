@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.0.1</VersionPrefix>
+		<VersionPrefix>2.0.1-preview</VersionPrefix>
 		<Title>DistributedCache.AzureTableStorage</Title>
 		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
 		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
