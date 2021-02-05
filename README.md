@@ -8,7 +8,8 @@
 | Version | Dependencies | Information 
 | :--- | :--- | :---
 [![V1](https://img.shields.io/badge/nuget-v1.1.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/1.1.0) | [Windows.Azure.Storage](https://www.nuget.org/packages/WindowsAzure.Storage/) | This dependency is declared deprecated by Microsoft.
-[![V2](https://img.shields.io/badge/nuget-v2.0.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.0.0) | [Microsoft.Azure.Cosmos.Table](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/2.0.0-preview) | This is still a preview version.
+[![V2](https://img.shields.io/badge/nuget-v2.0.1-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.0.1) | [Microsoft.Azure.Cosmos.Table](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/1.0.7) |
+[![V2-preview](https://img.shields.io/badge/nuget-v2.0.1_Preview-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.0.1-preview) | [Microsoft.Azure.Cosmos.Table - Preview](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/2.0.0-preview) | This is still a preview version.
 
 ## Code example
 
