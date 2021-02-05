@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.0.1</VersionPrefix>
+		<VersionPrefix>2.0.1-preview</VersionPrefix>
 		<Title>DistributedCache.AzureTableStorage</Title>
 		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
 		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
 		<PackageId>DistributedCache.AzureTableStorage</PackageId>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<Copyright>Stef Heyenrath</Copyright>
-		<ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
+		<ProjectGuid>{45A9D27B-07FD-4102-BC62-55F75B089495}</ProjectGuid>
 		<LangVersion>8.0</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MicrosoftAzureCosmosTable.Extensions" Version="1.0.7" />
+		<PackageReference Include="MicrosoftAzureCosmosTable.Extensions" Version="2.0.0-preview-00" />
 	</ItemGroup>
 
 </Project>
