@@ -32,6 +32,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         private DateTimeOffset _lastExpirationScan;
         private readonly Func<Task> _deleteExpiredCachedItemsDelegate;
         private readonly string _partitionKey;
+        private readonly TimeSpan? _defaultAbsoluteExpirationRelativeToNow;
         private readonly Lazy<ITableSet<CachedItem>> _tableSet;
 
         /// <summary>
@@ -59,6 +60,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             _expiredItemsDeletionInterval = cacheOptions.ExpiredItemsDeletionInterval;
             _deleteExpiredCachedItemsDelegate = DeleteExpiredCacheItems;
             _partitionKey = cacheOptions.PartitionKey;
+            _defaultAbsoluteExpirationRelativeToNow = cacheOptions.DefaultAbsoluteExpirationRelativeToNow;
 
             _tableSet = new Lazy<ITableSet<CachedItem>>(() =>
             {
@@ -221,6 +223,11 @@ namespace DistributedCache.AzureTableStorage.Implementations
                 }
 
                 return options.AbsoluteExpiration.Value;
+            }
+
+            if (_defaultAbsoluteExpirationRelativeToNow.HasValue)
+            {
+                return currentTime.Add(_defaultAbsoluteExpirationRelativeToNow.Value);
             }
 
             throw new NotSupportedException("Only 'AbsoluteExpirationRelativeToNow' and 'AbsoluteExpiration' are supported in Azure Table Storage.");

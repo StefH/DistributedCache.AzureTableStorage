@@ -12,6 +12,7 @@ namespace DistributedCache.AzureTableStorage.Tests
     public class AzureTableStorageCacheTests
     {
         private readonly IDistributedCache _cache;
+        private readonly IDistributedCache _defaultedCache;
 
         public AzureTableStorageCacheTests()
         {
@@ -26,6 +27,17 @@ namespace DistributedCache.AzureTableStorage.Tests
 
             _cache = new AzureTableStorageCache(options);
             _cache.Remove("key1");
+
+            var defaultedOptions = Microsoft.Extensions.Options.Options.Create(
+                new AzureTableStorageCacheOptions
+                {
+                    TableName = "AzureTableStorageCacheTests",
+                    PartitionKey = "IntegrationTests",
+                    ConnectionString = "UseDevelopmentStorage=true;",
+                    DefaultAbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1)
+                });
+
+            _defaultedCache = new AzureTableStorageCache(defaultedOptions);
         }
 
         [Fact]
@@ -86,6 +98,35 @@ namespace DistributedCache.AzureTableStorage.Tests
             // Assert
             Assert.StartsWith("Value cannot be null.", ex.Message);
             Assert.Contains("Parameter name: value", ex.Message);
+        }
+
+        [Fact]
+        public void SetAsync_Use_DefaultAbsoluteExpirationRelativeToNow_ValueIsStored()
+        {
+            // Arrange
+            string key = "key1";
+            byte[] value = Encoding.UTF32.GetBytes("value1");
+
+            // Act
+            _defaultedCache.Set(key, value);
+
+            // Assert
+            byte[] cachedValue = _defaultedCache.Get(key);
+            Assert.Equal(value, cachedValue);
+        }
+
+        [Fact]
+        public void SetAsync_Without_DefaultAbsoluteExpirationRelativeToNow_ThrowsNotSupportedException()
+        {
+            // Arrange
+            string key = "key1";
+            byte[] value = Encoding.UTF32.GetBytes("value1");
+
+            // Act
+            Exception ex = Assert.Throws<NotSupportedException>(() => _cache.Set(key, value));
+
+            // Assert
+            Assert.StartsWith("Only 'AbsoluteExpirationRelativeToNow' and 'AbsoluteExpiration' are supported in Azure Table Storage.", ex.Message);
         }
 
         [Fact]

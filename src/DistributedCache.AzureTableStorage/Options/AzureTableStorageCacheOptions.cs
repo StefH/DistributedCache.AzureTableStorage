@@ -20,6 +20,11 @@ namespace DistributedCache.AzureTableStorage.Options
         public TimeSpan? ExpiredItemsDeletionInterval { get; set; }
 
         /// <summary>
+        /// Gets or sets a default absolute expiration time, relative to now.
+        /// </summary>
+        public TimeSpan? DefaultAbsoluteExpirationRelativeToNow { get; set;}
+
+        /// <summary>
         /// Gets or sets the connection string of the storage account.
         /// </summary>
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
