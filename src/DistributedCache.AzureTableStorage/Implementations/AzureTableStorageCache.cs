@@ -43,9 +43,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
 
             var cacheOptions = options.Value;
 
-            Guard.NotNullOrEmpty(cacheOptions.ConnectionString, nameof(AzureTableStorageCacheOptions.ConnectionString));
-            Guard.NotNullOrEmpty(cacheOptions.TableName, nameof(AzureTableStorageCacheOptions.TableName));
-            Guard.NotNullOrEmpty(cacheOptions.PartitionKey, nameof(AzureTableStorageCacheOptions.PartitionKey));
+            Guard.NotNullOrEmpty(cacheOptions.ConnectionString);
+            Guard.NotNullOrEmpty(cacheOptions.TableName);
+            Guard.NotNullOrEmpty(cacheOptions.PartitionKey);
 
             if (cacheOptions.ExpiredItemsDeletionInterval.HasValue && cacheOptions.ExpiredItemsDeletionInterval.Value < MinimumExpiredItemsDeletionInterval)
             {
@@ -79,7 +79,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.Get(string)"/>
         public byte[]? Get(string key)
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
+            Guard.NotNullOrEmpty(key);
 
             var value = GetAsync(key).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -91,7 +91,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.GetAsync(string, CancellationToken)"/>
         public async Task<byte[]?> GetAsync(string key, CancellationToken token = default)
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
+            Guard.NotNullOrEmpty(key);
 
             await RefreshAsync(key, token).ConfigureAwait(false);
 
@@ -105,7 +105,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.Refresh(string)"/>
         public void Refresh(string key)
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
+            Guard.NotNullOrEmpty(key);
 
             RefreshAsync(key).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -115,7 +115,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.RefreshAsync(string, CancellationToken)"/>
         public async Task RefreshAsync(string key, CancellationToken token = default(CancellationToken))
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
+            Guard.NotNullOrEmpty(key);
 
             var item = await RetrieveAsync(key).ConfigureAwait(false);
             if (item != null)
@@ -137,7 +137,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.Remove(string)"/>
         public void Remove(string key)
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
+            Guard.NotNullOrEmpty(key);
 
             RemoveAsync(key).Wait();
 
@@ -147,7 +147,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.RemoveAsync(string, CancellationToken)"/>
         public async Task RemoveAsync(string key, CancellationToken token = default(CancellationToken))
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
+            Guard.NotNullOrEmpty(key);
 
             var item = await RetrieveAsync(key).ConfigureAwait(false);
             if (item != null)
@@ -161,9 +161,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.Set(string, byte[], DistributedCacheEntryOptions)"/>
         public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
-            Guard.NotNullOrEmpty(value, nameof(value));
-            Guard.NotNull(options, nameof(options));
+            Guard.NotNullOrEmpty(key);
+            Guard.NotNullOrEmpty(value);
+            Guard.NotNull(options);
 
             SetAsync(key, value, options).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -173,9 +173,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// <inheritdoc cref="IDistributedCache.SetAsync(string, byte[], DistributedCacheEntryOptions, CancellationToken)"/>
         public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
         {
-            Guard.NotNullOrEmpty(key, nameof(key));
-            Guard.NotNullOrEmpty(value, nameof(value));
-            Guard.NotNull(options, nameof(options));
+            Guard.NotNullOrEmpty(key);
+            Guard.NotNullOrEmpty(value);
+            Guard.NotNull(options);
 
             var utcNow = _systemClock.UtcNow;
             var expiresAtTime = GetExpiresAtTime(options, utcNow);
@@ -205,7 +205,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
             ScanForExpiredItemsIfRequired();
         }
 
-        private DateTimeOffset GetExpiresAtTime(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
+        private static DateTimeOffset GetExpiresAtTime(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
         {
             if (options.AbsoluteExpirationRelativeToNow.HasValue)
             {

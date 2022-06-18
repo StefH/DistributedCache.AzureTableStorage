@@ -37,9 +37,9 @@ public class AzureTableStorageCache : IDistributedCache
 
         var cacheOptions = options.Value;
 
-        Guard.NotNullOrEmpty(cacheOptions.ConnectionString, nameof(AzureTableStorageCacheOptions.ConnectionString));
-        Guard.NotNullOrEmpty(cacheOptions.TableName, nameof(AzureTableStorageCacheOptions.TableName));
-        Guard.NotNullOrEmpty(cacheOptions.PartitionKey, nameof(AzureTableStorageCacheOptions.PartitionKey));
+        Guard.NotNullOrEmpty(cacheOptions.ConnectionString);
+        Guard.NotNullOrEmpty(cacheOptions.TableName);
+        Guard.NotNullOrEmpty(cacheOptions.PartitionKey);
 
         if (cacheOptions.ExpiredItemsDeletionInterval.HasValue && cacheOptions.ExpiredItemsDeletionInterval.Value < MinimumExpiredItemsDeletionInterval)
         {
@@ -68,7 +68,7 @@ public class AzureTableStorageCache : IDistributedCache
     /// <inheritdoc cref="IDistributedCache.Get(string)"/>
     public byte[]? Get(string key)
     {
-        Guard.NotNullOrEmpty(key, nameof(key));
+        Guard.NotNullOrEmpty(key);
 
         var value = GetAsync(key).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -130,7 +130,7 @@ public class AzureTableStorageCache : IDistributedCache
     /// <inheritdoc cref="IDistributedCache.Remove(string)"/>
     public void Remove(string key)
     {
-        Guard.NotNullOrEmpty(key, nameof(key));
+        Guard.NotNullOrEmpty(key);
 
         RemoveAsync(key).Wait();
 
@@ -156,9 +156,9 @@ public class AzureTableStorageCache : IDistributedCache
     /// <inheritdoc cref="IDistributedCache.Set(string, byte[], DistributedCacheEntryOptions)"/>
     public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
     {
-        Guard.NotNullOrEmpty(key, nameof(key));
-        Guard.NotNullOrEmpty(value, nameof(value));
-        Guard.NotNull(options, nameof(options));
+        Guard.NotNullOrEmpty(key);
+        Guard.NotNullOrEmpty(value);
+        Guard.NotNull(options);
 
         SetAsync(key, value, options).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -168,9 +168,9 @@ public class AzureTableStorageCache : IDistributedCache
     /// <inheritdoc cref="IDistributedCache.SetAsync(string, byte[], DistributedCacheEntryOptions, CancellationToken)"/>
     public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default)
     {
-        Guard.NotNullOrEmpty(key, nameof(key));
-        Guard.NotNullOrEmpty(value, nameof(value));
-        Guard.NotNull(options, nameof(options));
+        Guard.NotNullOrEmpty(key);
+        Guard.NotNullOrEmpty(value);
+        Guard.NotNull(options);
 
         var utcNow = _systemClock.UtcNow;
         var expiresAtTime = GetExpiresAtTime(options, utcNow);
@@ -200,7 +200,7 @@ public class AzureTableStorageCache : IDistributedCache
         ScanForExpiredItemsIfRequired();
     }
 
-    private DateTimeOffset GetExpiresAtTime(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
+    private static DateTimeOffset GetExpiresAtTime(DistributedCacheEntryOptions options, DateTimeOffset currentTime)
     {
         if (options.AbsoluteExpirationRelativeToNow.HasValue)
         {
