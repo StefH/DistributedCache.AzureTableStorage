@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30128.74
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}"
 EndProject
@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		CHANGELOG.md = CHANGELOG.md
 		Directory.Build.props = Directory.Build.props
-		GitHubReleaseNotes.txt = GitHubReleaseNotes.txt
+		Generate-ReleaseNotes.cmd = Generate-ReleaseNotes.cmd
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -22,17 +22,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F10F13A1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.Tests", "tests\DistributedCache.AzureTableStorage.Tests\DistributedCache.AzureTableStorage.Tests.csproj", "{519A54B2-03A4-4705-A1FD-443EBF7243BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependencies", "dependencies", "{D7F1C045-FD66-4573-BF6B-2D0AF95AF576}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftAzureCosmosTable.Extensions", "..\_fork\WindowsAzure\MicrosoftAzureCosmosTable.Extensions\MicrosoftAzureCosmosTable.Extensions.csproj", "{FCBD1B49-C9AB-4589-8F42-F86D94F5D19B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage", "src\DistributedCache.AzureTableStorage\DistributedCache.AzureTableStorage.csproj", "{EE65A912-FC2F-4FF9-8717-7332267EE8E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V2", "src\DistributedCache.AzureTableStorage.V2\DistributedCache.AzureTableStorage.V2.csproj", "{47EC5CC8-1120-4575-864D-15BF1553360E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppExample.V2", "src\ConsoleAppExample.V2\ConsoleAppExample.V2.csproj", "{6D79893D-6E71-4434-B00D-C5FD7672DED7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V2-Preview", "src\DistributedCache.AzureTableStorage.V2-Preview\DistributedCache.AzureTableStorage.V2-Preview.csproj", "{45A9D27B-07FD-4102-BC62-5AF75B089492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V2-Preview", "src\DistributedCache.AzureTableStorage.V2-Preview\DistributedCache.AzureTableStorage.V2-Preview.csproj", "{45A9D27B-07FD-4102-BC62-55F75B089495}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V3", "src\DistributedCache.AzureTableStorage.V3\DistributedCache.AzureTableStorage.V3.csproj", "{CBB77890-1966-4F65-9A18-BE17B0315187}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppExample.V3", "src\ConsoleAppExample.V3\ConsoleAppExample.V3.csproj", "{B4CA7638-305C-41CD-9F3E-C3120D532854}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,10 +48,6 @@ Global
 		{519A54B2-03A4-4705-A1FD-443EBF7243BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{519A54B2-03A4-4705-A1FD-443EBF7243BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{519A54B2-03A4-4705-A1FD-443EBF7243BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCBD1B49-C9AB-4589-8F42-F86D94F5D19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCBD1B49-C9AB-4589-8F42-F86D94F5D19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCBD1B49-C9AB-4589-8F42-F86D94F5D19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCBD1B49-C9AB-4589-8F42-F86D94F5D19B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE65A912-FC2F-4FF9-8717-7332267EE8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE65A912-FC2F-4FF9-8717-7332267EE8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE65A912-FC2F-4FF9-8717-7332267EE8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,10 +60,18 @@ Global
 		{6D79893D-6E71-4434-B00D-C5FD7672DED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D79893D-6E71-4434-B00D-C5FD7672DED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D79893D-6E71-4434-B00D-C5FD7672DED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45A9D27B-07FD-4102-BC62-5AF75B089492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45A9D27B-07FD-4102-BC62-5AF75B089492}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45A9D27B-07FD-4102-BC62-5AF75B089492}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45A9D27B-07FD-4102-BC62-5AF75B089492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45A9D27B-07FD-4102-BC62-55F75B089495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45A9D27B-07FD-4102-BC62-55F75B089495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45A9D27B-07FD-4102-BC62-55F75B089495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45A9D27B-07FD-4102-BC62-55F75B089495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,11 +79,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5AA366D1-574C-42FE-B0A5-6D266065B2B2} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
 		{519A54B2-03A4-4705-A1FD-443EBF7243BB} = {F10F13A1-4FCB-41B3-98D5-F18425B3A2CE}
-		{FCBD1B49-C9AB-4589-8F42-F86D94F5D19B} = {D7F1C045-FD66-4573-BF6B-2D0AF95AF576}
 		{EE65A912-FC2F-4FF9-8717-7332267EE8E8} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
 		{47EC5CC8-1120-4575-864D-15BF1553360E} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
 		{6D79893D-6E71-4434-B00D-C5FD7672DED7} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
-		{45A9D27B-07FD-4102-BC62-5AF75B089492} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
+		{45A9D27B-07FD-4102-BC62-55F75B089495} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
+		{CBB77890-1966-4F65-9A18-BE17B0315187} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
+		{B4CA7638-305C-41CD-9F3E-C3120D532854} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A6ED5AF-7B32-444B-887A-ABF343EE609C}
