@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		CHANGELOG.md = CHANGELOG.md
 		Directory.Build.props = Directory.Build.props
-		GitHubReleaseNotes.txt = GitHubReleaseNotes.txt
+		Generate-ReleaseNotes.cmd = Generate-ReleaseNotes.cmd
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppExample.V2", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V2-Preview", "src\DistributedCache.AzureTableStorage.V2-Preview\DistributedCache.AzureTableStorage.V2-Preview.csproj", "{45A9D27B-07FD-4102-BC62-55F75B089495}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V3", "src\DistributedCache.AzureTableStorage.V3\DistributedCache.AzureTableStorage.V3.csproj", "{CBB74521-1966-4F65-9A18-BE17B0315187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTableStorage.V3", "src\DistributedCache.AzureTableStorage.V3\DistributedCache.AzureTableStorage.V3.csproj", "{CBB77890-1966-4F65-9A18-BE17B0315187}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppExample.V3", "src\ConsoleAppExample.V3\ConsoleAppExample.V3.csproj", "{B4CA7638-305C-41CD-9F3E-C3120D532854}"
 EndProject
@@ -64,10 +64,10 @@ Global
 		{45A9D27B-07FD-4102-BC62-55F75B089495}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45A9D27B-07FD-4102-BC62-55F75B089495}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45A9D27B-07FD-4102-BC62-55F75B089495}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBB74521-1966-4F65-9A18-BE17B0315187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBB74521-1966-4F65-9A18-BE17B0315187}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBB74521-1966-4F65-9A18-BE17B0315187}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBB74521-1966-4F65-9A18-BE17B0315187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB77890-1966-4F65-9A18-BE17B0315187}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,7 +83,7 @@ Global
 		{47EC5CC8-1120-4575-864D-15BF1553360E} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
 		{6D79893D-6E71-4434-B00D-C5FD7672DED7} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
 		{45A9D27B-07FD-4102-BC62-55F75B089495} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
-		{CBB74521-1966-4F65-9A18-BE17B0315187} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
+		{CBB77890-1966-4F65-9A18-BE17B0315187} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
 		{B4CA7638-305C-41CD-9F3E-C3120D532854} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
