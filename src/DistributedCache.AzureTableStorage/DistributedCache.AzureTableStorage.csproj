@@ -15,7 +15,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
+		<PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
 			<PrivateAssets>All</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
@@ -24,6 +24,7 @@
 		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
 		<PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
 		<PackageReference Include="windowsazure.storageextensions" Version="1.2.0" />
+        <PackageReference Include="Stef.Validation" Version="0.1.0" />
 	</ItemGroup>
 
 </Project>

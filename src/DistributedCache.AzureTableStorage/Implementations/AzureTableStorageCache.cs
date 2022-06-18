@@ -4,11 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using DistributedCache.AzureTableStorage.Models;
 using DistributedCache.AzureTableStorage.Options;
-using DistributedCache.AzureTableStorage.Validation;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
+using Stef.Validation;
 using WindowsAzure.Table;
 using WindowsAzure.Table.Extensions;
 #if WINDOWSAZURE
@@ -38,9 +37,9 @@ namespace DistributedCache.AzureTableStorage.Implementations
         /// Initializes a new instance of the <see cref="AzureTableStorageCache"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public AzureTableStorageCache([NotNull] IOptions<AzureTableStorageCacheOptions> options)
+        public AzureTableStorageCache(IOptions<AzureTableStorageCacheOptions> options)
         {
-            Guard.NotNull(options, nameof(options));
+            Guard.NotNull(options);
 
             var cacheOptions = options.Value;
 
@@ -146,7 +145,7 @@ namespace DistributedCache.AzureTableStorage.Implementations
         }
 
         /// <inheritdoc cref="IDistributedCache.RemoveAsync(string, CancellationToken)"/>
-        public async Task RemoveAsync([NotNull] string key, CancellationToken token = default(CancellationToken))
+        public async Task RemoveAsync(string key, CancellationToken token = default(CancellationToken))
         {
             Guard.NotNullOrEmpty(key, nameof(key));
 

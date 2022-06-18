@@ -1,9 +1,9 @@
-﻿using DistributedCache.AzureTableStorage.Implementations;
+﻿using System;
+using DistributedCache.AzureTableStorage.Implementations;
 using DistributedCache.AzureTableStorage.Options;
-using DistributedCache.AzureTableStorage.Validation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
-using System;
+using Stef.Validation;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
         [PublicAPI]
         public static IServiceCollection AddDistributedAzureTableStorageCache(this IServiceCollection services)
         {
-            Guard.NotNull(services, nameof(services));
+            Guard.NotNull(services);
 
             services.AddOptions();
             services.AddSingleton<IDistributedCache, AzureTableStorageCache>();
@@ -38,8 +38,8 @@ namespace Microsoft.Extensions.DependencyInjection
         [PublicAPI]
         public static IServiceCollection AddDistributedAzureTableStorageCache(this IServiceCollection services, Action<AzureTableStorageCacheOptions> configureAction)
         {
-            Guard.NotNull(services, nameof(services));
-            Guard.NotNull(configureAction, nameof(configureAction));
+            Guard.NotNull(services);
+            Guard.NotNull(configureAction);
 
             var options = new AzureTableStorageCacheOptions();
             configureAction(options);
