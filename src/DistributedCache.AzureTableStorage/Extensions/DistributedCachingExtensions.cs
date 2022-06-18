@@ -22,7 +22,7 @@ namespace DistributedCache.AzureTableStorage.Extensions
         /// <param name="options">The cache options for the value.</param>
         /// <param name="token">Optional. The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Task"/> that represents the asynchronous operation.</returns>
-        public static Task SetAsync<T>(this IDistributedCache distributedCache, string key, T value, DistributedCacheEntryOptions options, CancellationToken token = default(CancellationToken))
+        public static Task SetAsync<T>(this IDistributedCache distributedCache, string key, T value, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
             Guard.NotNull(distributedCache);
             Guard.NotNullOrEmpty(key);

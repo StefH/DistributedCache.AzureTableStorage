@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace ConsoleAppExample.V3;
 
-class Program
+internal class Program
 {
     static void Main(string[] args)
     {
