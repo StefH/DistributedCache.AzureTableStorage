@@ -1,3 +1,6 @@
+# 3.0.0 (18 June 2022)
+- [#12](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/12) - Create version 3.x.x. with a dependency on Azure.Data.Tables [feature] contributed by [StefH](https://github.com/StefH)
+
 # 2.0.1 (05 February 2021)
 - [#10](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/10) - Create new NuGet packages [feature] contributed by [StefH](https://github.com/StefH)
 - [#9](https://github.com/StefH/DistributedCache.AzureTableStorage/issues/9) - Cannot be used with Azure Functions bindings
