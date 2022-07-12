@@ -195,7 +195,7 @@ public class AzureTableStorageCache : IDistributedCache
         //    //item.SlidingExpiration = options.SlidingExpiration;
         //}
 
-        await _tableClient.Value.AddEntityAsync(item, token).ConfigureAwait(false);
+        await _tableClient.Value.UpsertEntityAsync(item, TableUpdateMode.Replace, token).ConfigureAwait(false);
 
         ScanForExpiredItemsIfRequired();
     }
