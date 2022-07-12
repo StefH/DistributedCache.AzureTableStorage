@@ -1,3 +1,7 @@
+# 3.0.1 (12 July 2022)
+- [#14](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/14) - Use UpsertEntityAsync instead of AddEntityAsync [bug] contributed by [StefH](https://github.com/StefH)
+- [#13](https://github.com/StefH/DistributedCache.AzureTableStorage/issues/13) - SetAsync fails when updating an existing value in V3.0 [bug]
+
 # 3.0.0 (18 June 2022)
 - [#12](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/12) - Create version 3.x.x. with a dependency on Azure.Data.Tables [feature] contributed by [StefH](https://github.com/StefH)
 
