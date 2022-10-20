@@ -9,7 +9,6 @@
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<Copyright>Stef Heyenrath</Copyright>
 		<ProjectGuid>{45A9D27B-07FD-4102-BC62-55F75B089495}</ProjectGuid>
-		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 

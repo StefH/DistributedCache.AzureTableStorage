@@ -10,7 +10,6 @@
 		<Copyright>Stuart Whiteford;Stef Heyenrath</Copyright>
 		<ProjectGuid>{EE65A912-FC2F-4FF9-8717-7332267EE8E8}</ProjectGuid>
 		<DefineConstants>$(DefineConstants);WINDOWSAZURE</DefineConstants>
-		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 

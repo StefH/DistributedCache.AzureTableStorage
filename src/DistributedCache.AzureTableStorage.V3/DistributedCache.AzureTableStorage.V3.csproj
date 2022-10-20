@@ -9,7 +9,6 @@
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<Copyright>Stef Heyenrath</Copyright>
 		<ProjectGuid>{CBB77890-1966-4F65-9A18-BE17B0315187}</ProjectGuid>
-		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<DefineConstants>$(DefineConstants);AZUREDATATABLES</DefineConstants>
 	</PropertyGroup>
