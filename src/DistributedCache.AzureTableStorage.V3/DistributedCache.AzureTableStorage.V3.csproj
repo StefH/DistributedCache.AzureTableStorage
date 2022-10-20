@@ -1,41 +1,60 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <VersionPrefix>3.0.1</VersionPrefix>
-        <Title>DistributedCache.AzureTableStorage</Title>
-        <AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
-        <RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
-        <PackageId>DistributedCache.AzureTableStorage</PackageId>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-        <Copyright>Stef Heyenrath</Copyright>
-        <ProjectGuid>{CBB77890-1966-4F65-9A18-BE17B0315187}</ProjectGuid>
-        <LangVersion>10.0</LangVersion>
-        <Nullable>enable</Nullable>
-        <DefineConstants>$(DefineConstants);AZUREDATATABLES</DefineConstants>
-    </PropertyGroup>
+	<PropertyGroup>
+		<VersionPrefix>3.1.0-preview-01</VersionPrefix>
+		<Title>DistributedCache.AzureTableStorage</Title>
+		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
+		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+		<PackageId>DistributedCache.AzureTableStorage</PackageId>
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<Copyright>Stef Heyenrath</Copyright>
+		<ProjectGuid>{CBB77890-1966-4F65-9A18-BE17B0315187}</ProjectGuid>
+		<LangVersion>10.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<DefineConstants>$(DefineConstants);AZUREDATATABLES</DefineConstants>
+	</PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<PathMap>$(MSBuildProjectDirectory)=/</PathMap>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <Compile Include="..\DistributedCache.AzureTableStorage\DependencyInjection\*.cs" />
-        <Compile Include="..\DistributedCache.AzureTableStorage\Extensions\*.cs" />
-        <Compile Include="..\DistributedCache.AzureTableStorage\Options\*.cs" />
-        <Compile Include="..\DistributedCache.AzureTableStorage\Utils\*.cs" />
-    </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\DistributedCache.AzureTableStorage\DependencyInjection\*.cs" />
+		<Compile Include="..\DistributedCache.AzureTableStorage\Extensions\*.cs" />
+		<Compile Include="..\DistributedCache.AzureTableStorage\Options\*.cs" />
+		<Compile Include="..\DistributedCache.AzureTableStorage\Utils\*.cs" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
-            <PrivateAssets>All</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
-        <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-        <PackageReference Include="Azure.Data.Tables" Version="12.6.0" />
-        <PackageReference Include="Stef.Validation" Version="0.1.0" />
-        <PackageReference Include="System.Linq.Async" Version="6.0.1" />
-    </ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="..\DistributedCache.AzureTableStorage\DependencyInjection\AzureTableStorageCacheExtensions.cs" />
+	  <Compile Remove="DependencyInjection\AzureTableStorageCacheExtensions.cs" />
+	  <Compile Remove="Implementations\BaseTableStorageClient.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
+			<PrivateAssets>All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Azure" Version="1.6.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+		<PackageReference Include="Azure.Data.Tables" Version="12.6.1" />
+		<PackageReference Include="Stef.Validation.Options" Version="0.1.0" />
+		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Extensions\" />
+	  <Folder Include="Utils\" />
+	  <Folder Include="Options\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="..\DistributedCache.AzureTableStorage\Extensions\DistributedCachingExtensions.cs" Link="Extensions\DistributedCachingExtensions.cs" />
+	  <Compile Update="..\DistributedCache.AzureTableStorage\Options\AzureTableStorageCacheOptions.cs" Link="Options\AzureTableStorageCacheOptions.cs" />
+	  <Compile Update="..\DistributedCache.AzureTableStorage\Utils\BinarySerializer.cs" Link="Utils\BinarySerializer.cs" />
+	</ItemGroup>
 </Project>

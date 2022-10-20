@@ -38,7 +38,7 @@ internal class Program
         var serviceProvider = services.BuildServiceProvider();
 
         // Resolve ILoggerFactory and ILogger via DI
-        var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
+        var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger<Program>();
         logger.LogInformation("Start...");
 
         // Resolve IDistributedCache via DI

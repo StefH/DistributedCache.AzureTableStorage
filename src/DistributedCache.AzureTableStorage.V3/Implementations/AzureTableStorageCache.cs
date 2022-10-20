@@ -16,8 +16,7 @@ namespace DistributedCache.AzureTableStorage.Implementations;
 /// <summary>
 /// An <see cref="IDistributedCache"/> implementation to cache data in Azure Table Storage.
 /// </summary>
-/// <seealso cref="IDistributedCache"/>.
-public class AzureTableStorageCache : IDistributedCache
+internal class AzureTableStorageCache : IDistributedCache
 {
     private static readonly TimeSpan MinimumExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
     private readonly ISystemClock _systemClock;
@@ -25,18 +24,18 @@ public class AzureTableStorageCache : IDistributedCache
     private DateTimeOffset _lastExpirationScan;
     private readonly Func<Task> _deleteExpiredCachedItemsDelegate;
     private readonly string _partitionKey;
-    private readonly Lazy<TableClient> _tableClient;
+    private readonly TableClient _tableClient;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AzureTableStorageCache"/> class.
     /// </summary>
     /// <param name="options">The options.</param>
-    public AzureTableStorageCache(IOptions<AzureTableStorageCacheOptions> options)
+    /// <param name="tableServiceClient">The TableServiceClient.</param>
+    public AzureTableStorageCache(IOptions<AzureTableStorageCacheOptions> options, TableServiceClient tableServiceClient)
     {
-        Guard.NotNull(options, nameof(options));
+        Guard.NotNull(tableServiceClient);
 
-        var cacheOptions = options.Value;
-
+        var cacheOptions = Guard.NotNull(options.Value);
         Guard.NotNullOrEmpty(cacheOptions.ConnectionString);
         Guard.NotNullOrEmpty(cacheOptions.TableName);
         Guard.NotNullOrEmpty(cacheOptions.PartitionKey);
@@ -53,16 +52,12 @@ public class AzureTableStorageCache : IDistributedCache
         _deleteExpiredCachedItemsDelegate = DeleteExpiredCacheItems;
         _partitionKey = cacheOptions.PartitionKey;
 
-        _tableClient = new Lazy<TableClient>(() =>
+        if (options.Value.CreateTableIfNotExists)
         {
-            var serviceClient = new TableServiceClient(cacheOptions.ConnectionString);
-            if (cacheOptions.CreateTableIfNotExists)
-            {
-                serviceClient.CreateTableIfNotExists(cacheOptions.TableName);
-            }
+            tableServiceClient.CreateTableIfNotExists(options.Value.TableName);
+        }
 
-            return new TableClient(cacheOptions.ConnectionString, cacheOptions.TableName);
-        });
+        _tableClient = tableServiceClient.GetTableClient(options.Value.TableName);
     }
 
     /// <inheritdoc cref="IDistributedCache.Get(string)"/>
@@ -111,7 +106,7 @@ public class AzureTableStorageCache : IDistributedCache
         {
             if (ShouldDelete(item))
             {
-                await _tableClient.Value
+                await _tableClient
                     .DeleteEntityAsync(item.PartitionKey, item.RowKey, cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return;
@@ -119,7 +114,7 @@ public class AzureTableStorageCache : IDistributedCache
 
             item.LastAccessTime = _systemClock.UtcNow;
 
-            await _tableClient.Value
+            await _tableClient
                 .UpdateEntityAsync(item, ETag.All, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -145,7 +140,7 @@ public class AzureTableStorageCache : IDistributedCache
         var item = await Retrieve(key).ConfigureAwait(false);
         if (item != null)
         {
-            await _tableClient.Value
+            await _tableClient
                 .DeleteEntityAsync(item.PartitionKey, item.RowKey, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -195,7 +190,7 @@ public class AzureTableStorageCache : IDistributedCache
         //    //item.SlidingExpiration = options.SlidingExpiration;
         //}
 
-        await _tableClient.Value.UpsertEntityAsync(item, TableUpdateMode.Replace, token).ConfigureAwait(false);
+        await _tableClient.UpsertEntityAsync(item, TableUpdateMode.Replace, token).ConfigureAwait(false);
 
         ScanForExpiredItemsIfRequired();
     }
@@ -222,7 +217,7 @@ public class AzureTableStorageCache : IDistributedCache
 
     private ValueTask<CachedItem?> Retrieve(string key)
     {
-        return _tableClient.Value
+        return _tableClient
             .QueryAsync<CachedItem>(e => e.PartitionKey == _partitionKey && e.RowKey == key)
             .FirstOrDefaultAsync();
     }
@@ -267,7 +262,7 @@ public class AzureTableStorageCache : IDistributedCache
     {
         var utcNow = _systemClock.UtcNow;
 
-        var itemsToDelete = await _tableClient.Value.QueryAsync<CachedItem>()
+        var itemsToDelete = await _tableClient.QueryAsync<CachedItem>()
             .Where(item => item.PartitionKey == _partitionKey && item.AbsoluteExpiration <= utcNow)
             .ToListAsync()
             .ConfigureAwait(false);
@@ -276,7 +271,7 @@ public class AzureTableStorageCache : IDistributedCache
         {
             try
             {
-                await _tableClient.Value
+                await _tableClient
                     .DeleteEntityAsync(itemToDelete.PartitionKey, itemToDelete.RowKey)
                     .ConfigureAwait(false);
             }
