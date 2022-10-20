@@ -6,7 +6,7 @@
 		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
 		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
 		<PackageId>DistributedCache.AzureTableStorage</PackageId>
-		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
 		<Copyright>Stef Heyenrath</Copyright>
 		<ProjectGuid>{CBB77890-1966-4F65-9A18-BE17B0315187}</ProjectGuid>
 		<Nullable>enable</Nullable>

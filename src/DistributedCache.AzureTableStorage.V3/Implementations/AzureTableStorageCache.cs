@@ -36,7 +36,6 @@ internal abstract class AzureTableStorageCache : IDistributedCache
         Guard.NotNull(tableServiceClient);
 
         var cacheOptions = Guard.NotNull(options.Value);
-        Guard.NotNullOrEmpty(cacheOptions.ConnectionString);
         Guard.NotNullOrEmpty(cacheOptions.TableName);
         Guard.NotNullOrEmpty(cacheOptions.PartitionKey);
 

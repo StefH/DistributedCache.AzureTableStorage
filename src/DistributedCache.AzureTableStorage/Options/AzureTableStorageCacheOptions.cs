@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Internal;
 
 namespace DistributedCache.AzureTableStorage.Options;
@@ -56,11 +57,13 @@ public class AzureTableStorageCacheOptions
     /// <summary>
     /// The name of the table to use.
     /// </summary>
+    [Required]
     public string TableName { get; set; } = null!;
 
     /// <summary>
     /// The Partition Key to use.
     /// </summary>
+    [Required]
     public string PartitionKey { get; set; } = null!;
 
     /// <summary>
