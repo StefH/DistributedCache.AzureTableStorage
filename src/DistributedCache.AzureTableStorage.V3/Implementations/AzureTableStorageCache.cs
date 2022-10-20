@@ -16,7 +16,7 @@ namespace DistributedCache.AzureTableStorage.Implementations;
 /// <summary>
 /// An <see cref="IDistributedCache"/> implementation to cache data in Azure Table Storage.
 /// </summary>
-internal class AzureTableStorageCache : IDistributedCache
+internal abstract class AzureTableStorageCache : IDistributedCache
 {
     private static readonly TimeSpan MinimumExpiredItemsDeletionInterval = TimeSpan.FromMinutes(5);
     private readonly ISystemClock _systemClock;
