@@ -30,12 +30,9 @@ public static class DistributedCachingExtensions
         Guard.NotNullOrEmpty(key);
         Guard.NotNull(options);
 
-        if (typeof(T) == typeof(string))
-        {
-            return distributedCache.SetStringAsync(key, value as string, options, token);
-        }
-
-        return distributedCache.SetAsync(key, BinarySerializer.Serialize(value), options, token);
+        return typeof(T) == typeof(string) ?
+            distributedCache.SetStringAsync(key, value as string, options, token) :
+            distributedCache.SetAsync(key, BinarySerializer.Serialize(value), options, token);
     }
 
     /// <summary>
@@ -49,13 +46,13 @@ public static class DistributedCachingExtensions
     [PublicAPI]
     public static async Task<T?> GetAsync<T>(this IDistributedCache distributedCache, string key, CancellationToken token = default) where T : class
     {
-        Guard.NotNull(distributedCache, nameof(distributedCache));
-        Guard.NotNullOrEmpty(key, nameof(key));
+        Guard.NotNull(distributedCache);
+        Guard.NotNullOrEmpty(key);
 
         // In case of string, just use the existing DistributedCacheExtensions
         if (typeof(T) == typeof(string))
         {
-            string stringValue = await distributedCache.GetStringAsync(key, token).ConfigureAwait(false);
+            var stringValue = await distributedCache.GetStringAsync(key, token).ConfigureAwait(false);
 
             return (T)Convert.ChangeType(stringValue, typeof(T));
         }
