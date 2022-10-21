@@ -8,7 +8,7 @@
         <Authors>Stef Heyenrath</Authors>
         <PackageTags>Distributed DistributedCache Cache Azure Table Storage</PackageTags>
         <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-        <PackageIconUrl>https://raw.githubusercontent.com/stefh/DistributedCache.AzureTableStorage/master/resources/AzureTableStorage_logo_180x180.png</PackageIconUrl>
+	    <PackageIcon>AzureTableStorage_logo_64x64.png</PackageIcon>
         <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryType>git</RepositoryType>
@@ -26,6 +26,10 @@
         <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="../../resources/AzureTableStorage_logo_64x64.png" Pack="true" PackagePath="" />
+	</ItemGroup>
 
     <Choose>
         <!-- The environment variable `Prerelease` is set in the azure-pipelines.yml file. -->

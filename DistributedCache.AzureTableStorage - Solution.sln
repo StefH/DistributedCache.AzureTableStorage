@@ -4,12 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF60A9C5-549D-46BC-B782-7B7AD1C207D0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		CHANGELOG.md = CHANGELOG.md
-		Directory.Build.props = Directory.Build.props
 		Generate-ReleaseNotes.cmd = Generate-ReleaseNotes.cmd
 		README.md = README.md
 	EndProjectSection
