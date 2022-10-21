@@ -1,3 +1,7 @@
+# 3.1.0 (21 October 2022)
+- [#16](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/16) - Add support for ManagedIdentity [feature] contributed by [StefH](https://github.com/StefH)
+- [#15](https://github.com/StefH/DistributedCache.AzureTableStorage/issues/15) - Support for managed identities [feature]
+
 # 3.0.1 (12 July 2022)
 - [#14](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/14) - Use UpsertEntityAsync instead of AddEntityAsync [bug] contributed by [StefH](https://github.com/StefH)
 - [#13](https://github.com/StefH/DistributedCache.AzureTableStorage/issues/13) - SetAsync fails when updating an existing value in V3.0 [bug]
