@@ -1,3 +1,6 @@
+# 3.2.0 (10 May 2023)
+- [#18](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/18) - Added table storage API version ID to AzureTableStorageCacheOptions [feature] contributed by [natiox](https://github.com/natiox)
+
 # 3.1.0 (21 October 2022)
 - [#16](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/16) - Add support for ManagedIdentity [feature] contributed by [StefH](https://github.com/StefH)
 - [#15](https://github.com/StefH/DistributedCache.AzureTableStorage/issues/15) - Support for managed identities [feature]
