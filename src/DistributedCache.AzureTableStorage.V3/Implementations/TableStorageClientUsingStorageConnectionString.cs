@@ -8,7 +8,7 @@ namespace DistributedCache.AzureTableStorage.Implementations;
 internal class TableStorageClientUsingStorageConnectionString : AzureTableStorageCache
 {
     public TableStorageClientUsingStorageConnectionString(IOptions<AzureTableStorageCacheOptions> options) :
-        base(options, new TableServiceClient(Guard.NotNullOrWhiteSpace(options.Value.ConnectionString)))
+        base(options, new TableServiceClient(Guard.NotNullOrWhiteSpace(options.Value.ConnectionString), options.Value.ServiceVersionId.HasValue ? new TableClientOptions((TableClientOptions.ServiceVersion)options.Value.ServiceVersionId) : null))
     {
     }
 }

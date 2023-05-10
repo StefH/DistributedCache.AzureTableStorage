@@ -70,4 +70,9 @@ public class AzureTableStorageCacheOptions
     /// Creates the table 'TableName' if it does not already exist. Default is true.
     /// </summary>
     public bool CreateTableIfNotExists { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the Azure Table Storage API version ID.  Leave null for default or set to an Azure.Data.Tables.TableClientOptions.ServiceVersion enum value.
+    /// </summary>
+    public int? ServiceVersionId { get; set; }
 }
