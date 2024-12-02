@@ -1,43 +1,43 @@
 <Project>
-    <PropertyGroup>
-        <MsBuildAllProjects>$(MsBuildAllProjects);$(MsBuildThisFileFullPath)</MsBuildAllProjects>
-    </PropertyGroup>
+  <PropertyGroup>
+    <MsBuildAllProjects>$(MsBuildAllProjects);$(MsBuildThisFileFullPath)</MsBuildAllProjects>
+  </PropertyGroup>
 
-    <PropertyGroup>
-        <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
-        <Authors>Stef Heyenrath</Authors>
-        <PackageTags>Distributed DistributedCache Cache Azure Table Storage</PackageTags>
-        <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-	    <PackageIcon>AzureTableStorage_logo_64x64.png</PackageIcon>
-        <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/stefh/DistributedCache.AzureTableStorage</RepositoryUrl>
-        <DebugType>full</DebugType>
-        <IncludeSymbols>False</IncludeSymbols>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-        <LangVersion>10.0</LangVersion>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Description>Distributed cache implementation of Microsoft.Extensions.Caching.Distributed.IDistributedCache using Azure Table Storage.</Description>
+    <Authors>Stef Heyenrath</Authors>
+    <PackageTags>Distributed DistributedCache Cache Azure Table Storage</PackageTags>
+    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
+    <PackageIcon>AzureTableStorage_logo_64x64.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/StefH/DistributedCache.AzureTableStorage</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/stefh/DistributedCache.AzureTableStorage</RepositoryUrl>
+    <DebugType>full</DebugType>
+    <IncludeSymbols>False</IncludeSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <LangVersion>10.0</LangVersion>
+  </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<None Include="../../resources/AzureTableStorage_logo_64x64.png" Pack="true" PackagePath="" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="../../resources/AzureTableStorage_logo_64x64.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
-    <Choose>
-        <!-- The environment variable `Prerelease` is set in the azure-pipelines.yml file. -->
-        <When Condition=" '$(Prerelease)' != '' ">
-            <PropertyGroup>
-                <!-- Set the version to x.x.x.x-{Prerelease}-1{Build_BuildId} (this is same buildId as defined in the azure-pipelines.yml file). -->
-                <VersionSuffix>$(Prerelease)-1$(BUILD_BUILDID)</VersionSuffix>
-            </PropertyGroup>
-        </When>
-    </Choose>
+  <Choose>
+    <!-- The environment variable `Prerelease` is set in the azure-pipelines.yml file. -->
+    <When Condition=" '$(Prerelease)' != '' ">
+      <PropertyGroup>
+        <!-- Set the version to x.x.x.x-{Prerelease}-1{Build_BuildId} (this is same buildId as defined in the azure-pipelines.yml file). -->
+        <VersionSuffix>$(Prerelease)-1$(BUILD_BUILDID)</VersionSuffix>
+      </PropertyGroup>
+    </When>
+  </Choose>
 </Project>
