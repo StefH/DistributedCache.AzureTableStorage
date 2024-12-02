@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
+﻿using Azure;
 using Azure.Data.Tables;
 using DistributedCache.AzureTableStorage.Models;
 using DistributedCache.AzureTableStorage.Options;
