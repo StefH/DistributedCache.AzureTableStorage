@@ -6,7 +6,7 @@
 		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
 		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
 		<PackageId>DistributedCache.AzureTableStorage</PackageId>
-		<TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net8.0</TargetFrameworks>
 		<Copyright>Stef Heyenrath</Copyright>
 		<ProjectGuid>{CBB77890-1966-4F65-9A18-BE17B0315187}</ProjectGuid>
 		<Nullable>enable</Nullable>
@@ -42,6 +42,18 @@
 		<PackageReference Include="Azure.Data.Tables" Version="12.6.1" />
 		<PackageReference Include="Stef.Validation.Options" Version="0.1.0" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' != 'net8.0'">
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
