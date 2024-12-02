@@ -36,6 +36,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedCache.AzureTable
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppExample.V3", "src\ConsoleAppExample.V3\ConsoleAppExample.V3.csproj", "{B4CA7638-305C-41CD-9F3E-C3120D532854}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributedCache.AzureTableStorage.V4", "src\DistributedCache.AzureTableStorage.V4\DistributedCache.AzureTableStorage.V4.csproj", "{17063728-FC51-4194-8FFC-57EF895CEEF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppExample.V4", "src\ConsoleAppExample.V4\ConsoleAppExample.V4.csproj", "{CE03A3B8-BD0B-4D46-A554-674150D78951}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +78,14 @@ Global
 		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4CA7638-305C-41CD-9F3E-C3120D532854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17063728-FC51-4194-8FFC-57EF895CEEF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17063728-FC51-4194-8FFC-57EF895CEEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17063728-FC51-4194-8FFC-57EF895CEEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17063728-FC51-4194-8FFC-57EF895CEEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE03A3B8-BD0B-4D46-A554-674150D78951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE03A3B8-BD0B-4D46-A554-674150D78951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE03A3B8-BD0B-4D46-A554-674150D78951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE03A3B8-BD0B-4D46-A554-674150D78951}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +99,8 @@ Global
 		{45A9D27B-07FD-4102-BC62-55F75B089495} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
 		{CBB77890-1966-4F65-9A18-BE17B0315187} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
 		{B4CA7638-305C-41CD-9F3E-C3120D532854} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
+		{17063728-FC51-4194-8FFC-57EF895CEEF5} = {CBFFFEA9-60E2-4179-BBBA-989DC6E9C3BD}
+		{CE03A3B8-BD0B-4D46-A554-674150D78951} = {52B766D7-EA4B-4EFB-B0AB-486A10C020F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A6ED5AF-7B32-444B-887A-ABF343EE609C}
