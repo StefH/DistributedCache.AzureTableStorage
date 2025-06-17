@@ -1,3 +1,6 @@
+# 3.3.1 (17 June 2025)
+- [#24](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/24) - Update some NuGet packages [feature] contributed by [StefH](https://github.com/StefH)
+
 # 3.3.0 (02 December 2024)
 - [#21](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/21) - [Snyk] Security upgrade Newtonsoft.Json.Bson from 1.0.2 to 1.0.3 contributed by [StefH](https://github.com/StefH)
 - [#23](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/23) - Adding net8 support and package updates [feature] contributed by [anth12](https://github.com/anth12)
