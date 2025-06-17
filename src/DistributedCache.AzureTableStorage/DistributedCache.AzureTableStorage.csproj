@@ -1,27 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<VersionPrefix>1.2.0</VersionPrefix>
-		<Title>DistributedCache.AzureTableStorage</Title>
-		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
-		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
-		<PackageId>DistributedCache.AzureTableStorage</PackageId>
-		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-		<Copyright>Stuart Whiteford;Stef Heyenrath</Copyright>
-		<ProjectGuid>{EE65A912-FC2F-4FF9-8717-7332267EE8E8}</ProjectGuid>
-		<DefineConstants>$(DefineConstants);WINDOWSAZURE</DefineConstants>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>1.2.1</VersionPrefix>
+    <Title>DistributedCache.AzureTableStorage</Title>
+    <AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
+    <RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+    <PackageId>DistributedCache.AzureTableStorage</PackageId>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Copyright>Stuart Whiteford;Stef Heyenrath</Copyright>
+    <ProjectGuid>{EE65A912-FC2F-4FF9-8717-7332267EE8E8}</ProjectGuid>
+    <DefineConstants>$(DefineConstants);WINDOWSAZURE</DefineConstants>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
-			<PrivateAssets>All</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
-		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
-		<PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
-		<PackageReference Include="windowsazure.storageextensions" Version="1.2.0" />
-        <PackageReference Include="Stef.Validation.Options" Version="0.1.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <PackageReference Include="windowsazure.storageextensions" Version="1.3.0" />
+  </ItemGroup>
 
 </Project>

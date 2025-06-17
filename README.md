@@ -1,4 +1,4 @@
-# ![logo](resources/AzureTableStorage_logo_64x64.png?raw=true) DistributedCache.AzureTableStorage
+# ![logo](resources/AzureTableStorage_logo_32x32.png) DistributedCache.AzureTableStorage
 
 * Based on [oceanweb/azuretablestoragecache](https://gitlab.com/oceanweb/azuretablestoragecache) but with lower dependencies.
 * Extra added logic to use strongly typed objects with IDistributedCache instead of byte arrays.
@@ -7,10 +7,10 @@
 ## Info
 | Version | Dependencies | Information 
 | :--- | :--- | :---
-[![V1](https://img.shields.io/badge/nuget-v1.2.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/1.2.0) | [Windows.Azure.Storage](https://www.nuget.org/packages/WindowsAzure.Storage/) | This dependency is declared deprecated by Microsoft.
-[![V2](https://img.shields.io/badge/nuget-v2.1.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.1.0) | [Microsoft.Azure.Cosmos.Table](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/1.0.7) |
-[![V2-preview](https://img.shields.io/badge/nuget-v2.1.0_Preview-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.1.0-preview) | [Microsoft.Azure.Cosmos.Table - Preview](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/2.0.0-preview) | This is still a preview version.
-[![V3](https://img.shields.io/badge/nuget-v3.3.0-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage) | [Azure.Data.Tables](https://www.nuget.org/packages/Azure.Data.Tables) |
+[![V1](https://img.shields.io/badge/nuget-v1.2.1-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/1.2.0) | [Windows.Azure.Storage](https://www.nuget.org/packages/WindowsAzure.Storage/) | This dependency is declared deprecated by Microsoft.
+[![V2](https://img.shields.io/badge/nuget-v2.1.1-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.1.0) | [Microsoft.Azure.Cosmos.Table](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/1.0.7) |
+[![V2-preview](https://img.shields.io/badge/nuget-v2.1.1_Preview-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage/2.1.0-preview) | [Microsoft.Azure.Cosmos.Table - Preview](https://www.nuget.org/packages/Microsoft.Azure.Cosmos.Table/2.0.0-preview) | This is still a preview version.
+[![V3](https://img.shields.io/badge/nuget-v3.3.1-blue)](https://www.nuget.org/packages/DistributedCache.AzureTableStorage) | [Azure.Data.Tables](https://www.nuget.org/packages/Azure.Data.Tables) |
 
 
 ## Code example
@@ -74,3 +74,12 @@ await cache.SetAsync("t1", test, cacheOptions);
 var t2 = await cache.GetAsync<TestModel>("t1");
 logger.LogInformation("t2 : {TestModel}", JsonConvert.SerializeObject(t2));
 ```
+
+
+## Sponsors
+
+[Entity Framework Extensions](https://entityframework-extensions.net/?utm_source=StefH) and [Dapper Plus](https://dapper-plus.net/?utm_source=StefH) are major sponsors and proud to contribute to the development of **DistributedCache.AzureTableStorage**.
+
+[![Entity Framework Extensions](https://raw.githubusercontent.com/StefH/resources/main/sponsor/entity-framework-extensions-sponsor.png)](https://entityframework-extensions.net/bulk-insert?utm_source=StefH)
+
+[![Dapper Plus](https://raw.githubusercontent.com/StefH/resources/main/sponsor/dapper-plus-sponsor.png)](https://dapper-plus.net/bulk-insert?utm_source=StefH)

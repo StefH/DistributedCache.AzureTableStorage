@@ -1,42 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<VersionPrefix>2.2.0</VersionPrefix>
-		<Title>DistributedCache.AzureTableStorage</Title>
-		<AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
-		<RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
-		<PackageId>DistributedCache.AzureTableStorage</PackageId>
-		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-		<Copyright>Stef Heyenrath</Copyright>
-		<ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>2.2.1</VersionPrefix>
+    <Title>DistributedCache.AzureTableStorage</Title>
+    <AssemblyName>DistributedCache.AzureTableStorage</AssemblyName>
+    <RootNamespace>DistributedCache.AzureTableStorage</RootNamespace>
+    <PackageId>DistributedCache.AzureTableStorage</PackageId>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Copyright>Stef Heyenrath</Copyright>
+    <ProjectGuid>{47EC5CC8-1120-4575-864D-15BF1553360E}</ProjectGuid>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<PathMap>$(MSBuildProjectDirectory)=/</PathMap>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	</PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="..\DistributedCache.AzureTableStorage\*\AssemblyInfo.cs" />
+    <Compile Include="..\DistributedCache.AzureTableStorage\*.cs;..\DistributedCache.AzureTableStorage\**\*.cs" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Compile Remove="..\DistributedCache.AzureTableStorage\*\AssemblyInfo.cs" />
-		<Compile Include="..\DistributedCache.AzureTableStorage\*.cs;..\DistributedCache.AzureTableStorage\**\*.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Remove="..\DistributedCache.AzureTableStorage\obj\**\**" />
-		<Compile Remove="..\DistributedCache.AzureTableStorage\bin\**\**" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="..\DistributedCache.AzureTableStorage\obj\**\**" />
+    <Compile Remove="..\DistributedCache.AzureTableStorage\bin\**\**" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
-			<PrivateAssets>All</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
-		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-        <PackageReference Include="Stef.Validation.Options" Version="0.1.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="MicrosoftAzureCosmosTable.Extensions" Version="1.0.7" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MicrosoftAzureCosmosTable.Extensions" Version="1.0.7" />
+  </ItemGroup>
 
 </Project>
