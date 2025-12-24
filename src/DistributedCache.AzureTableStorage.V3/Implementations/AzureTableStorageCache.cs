@@ -113,9 +113,16 @@ internal abstract class AzureTableStorageCache : IDistributedCache
 
             item.LastAccessTime = _systemClock.UtcNow;
 
-            await _tableClient
-                .UpdateEntityAsync(item, ETag.All, cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+            try
+            {
+                await _tableClient
+                    .UpdateEntityAsync(item, ETag.All, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status is 404 or 412)
+            {
+                // Entity was deleted or modified by another process, so just ignore
+            }
         }
 
         ScanForExpiredItemsIfRequired();
