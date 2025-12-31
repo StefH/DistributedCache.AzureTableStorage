@@ -1,3 +1,8 @@
+# 3.4.0 (31 December 2025)
+- [#25](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/25) - net10 update [feature] contributed by [anth12](https://github.com/anth12)
+- [#26](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/26) - Added error handling for concurrency issue [bug] contributed by [anth12](https://github.com/anth12)
+- [#19](https://github.com/StefH/DistributedCache.AzureTableStorage/issues/19) - Possible race condition when reading expired item [bug]
+
 # 3.3.1 (17 June 2025)
 - [#24](https://github.com/StefH/DistributedCache.AzureTableStorage/pull/24) - Update some NuGet packages [feature] contributed by [StefH](https://github.com/StefH)
 
